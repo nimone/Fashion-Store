@@ -1,12 +1,14 @@
 lockfileVersion: 5.3
 
 specifiers:
+  bcryptjs: ^2.4.3
   dotenv: ^10.0.0
   express: ^4.17.1
   mongoose: ^6.0.2
   nodemon: ^2.0.12
 
 dependencies:
+  bcryptjs: 2.4.3
   dotenv: 10.0.0
   express: 4.17.1
   mongoose: 6.0.2
@@ -96,6 +98,10 @@ packages:
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+    dev: false
+
+  /bcryptjs/2.4.3:
+    resolution: {integrity: sha1-mrVie5PmBiH/fNrF2pczAn3x0Ms=}
     dev: false
 
   /binary-extensions/2.2.0:

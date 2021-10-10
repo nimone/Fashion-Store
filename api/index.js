@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 
+const authRouter = require('./routes/auth') 
 const userRouter = require('./routes/user') 
 
 const app = express()
@@ -15,6 +16,8 @@ mongoose.connect(process.env.DB_URL, {
 	.catch(err => console.error(err))
 
 app.use(express.json())
+
+app.use("/auth", authRouter)
 app.use("/users", userRouter)
 
 app.get("/", (req, res) => {
