@@ -4,6 +4,7 @@ specifiers:
   bcryptjs: ^2.4.3
   dotenv: ^10.0.0
   express: ^4.17.1
+  jsonwebtoken: ^8.5.1
   mongoose: ^6.0.2
   nodemon: ^2.0.12
 
@@ -11,6 +12,7 @@ dependencies:
   bcryptjs: 2.4.3
   dotenv: 10.0.0
   express: 4.17.1
+  jsonwebtoken: 8.5.1
   mongoose: 6.0.2
 
 devDependencies:
@@ -158,6 +160,10 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       buffer: 5.7.1
+    dev: false
+
+  /buffer-equal-constant-time/1.0.1:
+    resolution: {integrity: sha1-+OcRMvf/5uAaXJaXpMbz5I1cyBk=}
     dev: false
 
   /buffer/5.7.1:
@@ -349,6 +355,12 @@ packages:
   /duplexer3/0.1.4:
     resolution: {integrity: sha1-7gHdHKwO08vH/b6jfcCo8c4ALOI=}
     dev: true
+
+  /ecdsa-sig-formatter/1.0.11:
+    resolution: {integrity: sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==}
+    dependencies:
+      safe-buffer: 5.1.2
+    dev: false
 
   /ee-first/1.1.1:
     resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
@@ -673,6 +685,37 @@ packages:
     resolution: {integrity: sha1-Wx85evx11ne96Lz8Dkfh+aPZqJg=}
     dev: true
 
+  /jsonwebtoken/8.5.1:
+    resolution: {integrity: sha512-XjwVfRS6jTMsqYs0EsuJ4LGxXV14zQybNd4L2r0UvbVnSF9Af8x7p5MzbJ90Ioz/9TI41/hTCvznF/loiSzn8w==}
+    engines: {node: '>=4', npm: '>=1.4.28'}
+    dependencies:
+      jws: 3.2.2
+      lodash.includes: 4.3.0
+      lodash.isboolean: 3.0.3
+      lodash.isinteger: 4.0.4
+      lodash.isnumber: 3.0.3
+      lodash.isplainobject: 4.0.6
+      lodash.isstring: 4.0.1
+      lodash.once: 4.1.1
+      ms: 2.1.3
+      semver: 5.7.1
+    dev: false
+
+  /jwa/1.4.1:
+    resolution: {integrity: sha512-qiLX/xhEEFKUAJ6FiBMbes3w9ATzyk5W7Hvzpa/SLYdxNtng+gcurvrI7TbACjIXlsJyr05/S1oUhZrc63evQA==}
+    dependencies:
+      buffer-equal-constant-time: 1.0.1
+      ecdsa-sig-formatter: 1.0.11
+      safe-buffer: 5.1.2
+    dev: false
+
+  /jws/3.2.2:
+    resolution: {integrity: sha512-YHlZCB6lMTllWDtSPHz/ZXTsi8S00usEV6v1tjq8tOUZzw7DpSDWVXjXDre6ed1w/pd495ODpHZYSdkRTsa0HA==}
+    dependencies:
+      jwa: 1.4.1
+      safe-buffer: 5.1.2
+    dev: false
+
   /kareem/2.3.2:
     resolution: {integrity: sha512-STHz9P7X2L4Kwn72fA4rGyqyXdmrMSdxqHx9IXon/FXluXieaFA6KJ2upcHAHxQPQ0LeM/OjLrhFxifHewOALQ==}
     dev: false
@@ -689,6 +732,34 @@ packages:
     dependencies:
       package-json: 6.5.0
     dev: true
+
+  /lodash.includes/4.3.0:
+    resolution: {integrity: sha1-YLuYqHy5I8aMoeUTJUgzFISfVT8=}
+    dev: false
+
+  /lodash.isboolean/3.0.3:
+    resolution: {integrity: sha1-bC4XHbKiV82WgC/UOwGyDV9YcPY=}
+    dev: false
+
+  /lodash.isinteger/4.0.4:
+    resolution: {integrity: sha1-YZwK89A/iwTDH1iChAt3sRzWg0M=}
+    dev: false
+
+  /lodash.isnumber/3.0.3:
+    resolution: {integrity: sha1-POdoEMWSjQM1IwGsKHMX8RwLH/w=}
+    dev: false
+
+  /lodash.isplainobject/4.0.6:
+    resolution: {integrity: sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=}
+    dev: false
+
+  /lodash.isstring/4.0.1:
+    resolution: {integrity: sha1-1SfftUVuynzJu5XV2ur4i6VKVFE=}
+    dev: false
+
+  /lodash.once/4.1.1:
+    resolution: {integrity: sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=}
+    dev: false
 
   /lowercase-keys/1.0.1:
     resolution: {integrity: sha512-G2Lj61tXDnVFFOi8VZds+SoQjtQC3dgokKdDG2mTm1tx4m50NUHBOZSBwQQHyy0V12A0JTG4icfZQH+xPyh8VA==}
@@ -823,7 +894,6 @@ packages:
 
   /ms/2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
-    dev: true
 
   /negotiator/0.6.2:
     resolution: {integrity: sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw==}
@@ -1031,7 +1101,6 @@ packages:
   /semver/5.7.1:
     resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}
     hasBin: true
-    dev: true
 
   /semver/6.3.0:
     resolution: {integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==}
