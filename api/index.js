@@ -4,22 +4,30 @@ const dotenv = require('dotenv')
 
 const authRouter = require('./routes/auth') 
 const userRouter = require('./routes/user') 
+const productRouter = require('./routes/product') 
 
 const app = express()
 
 dotenv.config()
 
+// mongodb
 mongoose.connect(process.env.DB_URL, {
   useUnifiedTopology: true,
   useNewUrlParser: true
 }).then(() => console.log("Connected to database"))
 	.catch(err => console.error(err))
 
+
+// global middlewares
 app.use(express.json())
 
+
+// routes
 app.use("/auth", authRouter)
 app.use("/users", userRouter)
+app.use("/products", productRouter)
 
+// server status
 app.get("/", (req, res) => {
 	res.json({status: "ok"})
 })
