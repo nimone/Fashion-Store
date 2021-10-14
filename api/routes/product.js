@@ -1,5 +1,8 @@
 const router = require("express").Router()
+const { celebrate } = require('celebrate')
+
 const Product = require("../models/Product.model")
+const { product: productSchema } = require('../models/schema')
 const { 
 	verifyToken,
 	verifyAuthorization,
@@ -8,7 +11,9 @@ const {
 
 
 // Get all products - any user
-router.get("/", async (req, res) => {
+router.get("/", 
+	celebrate({ query: productSchema.query }),
+	async (req, res) => {
 	const query = req.query
 	try {
 		let products 
@@ -32,13 +37,10 @@ router.get("/", async (req, res) => {
 })
 
 // Add a new product - admin only
-router.post("/", verifyAdminAccess, async (req, res) => {
-	const { title, description, image, price } = req.body
-
-	// check required properties 
-	if (!title || !description || !image || (price === undefined)) {
-		return res.status(400).json(productResponse.missingField)
-	}
+router.post("/", 
+	verifyAdminAccess, 
+	celebrate({ body: productSchema.new }),
+	async (req, res) => {
 
 	try {
 		await Product.create(req.body)
@@ -51,7 +53,10 @@ router.post("/", verifyAdminAccess, async (req, res) => {
 })
 
 // Update a product - admin only
-router.put("/:id", verifyAdminAccess, async (req, res) => {
+router.put("/:id",
+  verifyAdminAccess, 
+	celebrate({ body: productSchema.update }),
+  async (req, res) => {
 	try {
 		await Product.findByIdAndUpdate(
 			req.params.id,

@@ -1,5 +1,8 @@
 const router = require("express").Router()
+const { celebrate } = require("celebrate")
+
 const Cart = require("../models/Cart.model")
+const { cart: cartSchema } = require('../models/schema')
 const { 
 	verifyToken,
 	verifyAuthorization,
@@ -20,7 +23,10 @@ router.get("/", verifyAdminAccess, async (req, res) => {
 })
 
 // Create a new cart - any authenticated user
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", 
+	verifyToken, 
+	celebrate({ body: cartSchema.new }),
+	async (req, res) => {
 	const { products } = req.body
 
 	try {
@@ -49,11 +55,16 @@ router.get("/:id", verifyAuthorization, async (req, res) => {
 })
 
 // Update a cart - authorized user & admin only
-router.put("/:id", verifyAuthorization, async (req, res) => {
+router.put("/:id", 
+	verifyAuthorization, 
+	celebrate({ body: cartSchema.update }),
+	async (req, res) => {
+	const { products } = req.body
+
 	try {
 		await Cart.updateOne(
 			{userID: req.params.id},
-			{$set: req.body},
+			{$push: { products }},
 			{new: true},
 		)
 		return res.json(cartResponse.cartUpdated)

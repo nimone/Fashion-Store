@@ -1,6 +1,9 @@
 const router = require("express").Router()
-const Order = require("../models/Order.model")
 const mongoose = require('mongoose')
+const { celebrate } = require('celebrate')
+
+const Order = require("../models/Order.model")
+const { order: orderSchema } = require('../models/schema')
 const { 
 	verifyToken,
 	verifyAuthorization,
@@ -9,7 +12,10 @@ const {
 
 
 // Get all orders - admin only
-router.get("/", verifyAdminAccess, async (req, res) => {
+router.get("/", 
+	verifyAdminAccess, 
+	celebrate({ query: orderSchema.query }),
+	async (req, res) => {
 	const query = req.query
 
 	try {
@@ -29,7 +35,10 @@ router.get("/", verifyAdminAccess, async (req, res) => {
 })
 
 // Create a new order - authenticated user
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", 
+	verifyToken, 
+	celebrate({ body: orderSchema.new }),
+	async (req, res) => {
 	const { products, amount, address } = req.body
 
 	if (!address || (amount === undefined)) {
@@ -110,7 +119,10 @@ router.get("/:id", verifyToken, async (req, res) => {
 })
 
 // Update an order - admin only
-router.put("/:id", verifyAdminAccess, async (req, res) => {
+router.put("/:id", 
+	verifyAdminAccess, 
+	celebrate({ body: orderSchema.update }),
+	async (req, res) => {
 	try {
 		await Order.findByIdAndUpdate(
 			req.params.id,

@@ -1,6 +1,9 @@
 const router = require("express").Router()
 const bcrypt = require("bcryptjs")
+const { celebrate } = require('celebrate')
+
 const User = require("../models/User.model")
+const { user: userSchema } = require('../models/schema')
 const { 
 	verifyToken,
 	verifyAuthorization,
@@ -8,9 +11,11 @@ const {
 } = require('../middlewares/verifyAuth')
 
 
-
 // Get all users - admin only
-router.get("/", verifyAdminAccess, async (req, res) => {
+router.get("/", 
+	verifyAdminAccess, 
+	celebrate({ query: userSchema.query }), 
+	async (req, res) => {
 	const query = req.query
 	try {
 		let users 
@@ -46,11 +51,23 @@ router.get("/me", verifyToken, async (req, res) => {
 })
 
 // Update a user - authorized user & admin only
-router.put("/:id", verifyAuthorization, async (req, res) => {
-	let { password, fullname } = req.body
+router.put("/:id", 
+	verifyAuthorization, 
+	celebrate({ body: userSchema.update }),
+	async (req, res) => {
+	let { currentPassword, newPassword, fullname } = req.body
 
-	if (password) {
-		password = await bcrypt.hash(password, 10)
+	// reset password
+	let password
+	if (newPassword) { 
+		const user = await User.findById(req.params.id)
+		const isValid = await bcrypt.compare(currentPassword, user.password)
+
+		if (isValid) {
+			password = await bcrypt.hash(newPassword, 10)
+		} else {
+			return res.status(401).json(userResponse.userUpdateFailed)
+		}
 	}
 
 	try {
@@ -128,6 +145,10 @@ const userResponse = {
 	userDeleted: {
 		status: "ok",
 		message: "user has been deleted",
+	},
+	userUpdateFailed: {
+		status: "error",
+		message: "user update failed"
 	},
 	userUpdated: {
 		status: "ok",

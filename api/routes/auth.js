@@ -1,15 +1,15 @@
 const router = require("express").Router()
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const { celebrate } = require("celebrate")
 
 const User = require("../models/User.model")
+const { auth: authSchema } = require("../models/schema")
 
-router.post("/register", async (req, res) => {
+router.post("/register", 
+	celebrate({body: authSchema.register}), 
+	async (req, res) => {
 	const { fullname, email, password } = req.body
-
-	if (!fullname || !email || !password) {
-		return res.status(400).json(authResponse.missingField)
-	}
 
 	try {
 		const passwordHash = await bcrypt.hash(password, 10)
@@ -26,12 +26,10 @@ router.post("/register", async (req, res) => {
 	}
 })
 
-router.post("/login", async (req, res) => {
+router.post("/login", 
+	celebrate({ body: authSchema.login }), 
+	async (req, res) => {
 	const { email, password } = req.body
-
-	if (!email || !password) {
-		return res.status(400).json(authResponse.missingField)
-	}
 
 	const user = await User.findOne({ email })
 	if (!user) {
