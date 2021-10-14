@@ -6,7 +6,11 @@ const authRouter = require('./routes/auth')
 const userRouter = require('./routes/user') 
 const productRouter = require('./routes/product') 
 const cartRouter = require('./routes/cart') 
-const orderRouter = require('./routes/order') 
+const orderRouter = require('./routes/order')
+const { 
+  handleMalformedJson,
+  formatCelebrateErrors
+} = require('./middlewares/handleError')
 
 const app = express()
 
@@ -22,6 +26,7 @@ mongoose.connect(process.env.DB_URL, {
 
 // global middlewares
 app.use(express.json())
+app.use(handleMalformedJson) // handle common req errors
 
 
 // routes
@@ -36,6 +41,8 @@ app.get("/", (req, res) => {
 	res.json({status: "ok"})
 })
 
+// format celebrate paramater validation errors
+app.use(formatCelebrateErrors)
 
 app.listen(process.env.PORT || 5000, () => {
 	console.log(`Listening on port ${process.env.PORT || 5000}`)
