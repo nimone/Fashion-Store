@@ -108,10 +108,6 @@ const productResponse = {
 		status: "ok",
 		message: "product has been deleted",
 	},
-	missingField: {
-		status: "error",
-		message: "a required field is missing",
-	},
 	unexpectedError: {
 		status: "error",
 		message: "an unexpected error occurred",

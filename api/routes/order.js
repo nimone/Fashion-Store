@@ -41,10 +41,6 @@ router.post("/",
 	async (req, res) => {
 	const { products, amount, address } = req.body
 
-	if (!address || (amount === undefined)) {
-		return res.status(400).json(orderResponse.missingField)
-	}
-
 	try {
 		const order = await Order.create({ 
 			userID: req.user.uid,
@@ -178,10 +174,6 @@ const orderResponse = {
 	orderNotFound: {
 		status: "error",
 		message: "order not found",
-	},
-	missingField: {
-		status: "error",
-		message: "a required field is missing",
 	},
 	unexpectedError: {
 		status: "error",

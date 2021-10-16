@@ -65,10 +65,6 @@ const authResponse = {
 		status: "ok",
 		message: "login successful",
 	},
-	missingField: {
-		status: "error",
-		message: "a required field is missing",
-	},
 	loginFailed: {
 		status: "error",
 		message: "incorrect email or password",
