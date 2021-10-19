@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const mongoose = require('mongoose')
+const ObjectId = require('mongoose').Types.ObjectId
 const { celebrate } = require('celebrate')
 
 const Order = require("../models/Order.model")
@@ -43,7 +43,7 @@ router.post("/",
 
 	try {
 		const order = await Order.create({ 
-			userID: req.user.uid,
+			userID: ObjectId(req.user.uid),
 			products,
 			amount,
 			address,
@@ -98,8 +98,8 @@ router.get("/:id", verifyToken, async (req, res) => {
 			order = await Order.findById(req.params.id)
 		} else {
 			order = await Order.findOne({
-				_id: mongoose.Types.ObjectId(req.params.id),
-				userID: req.user.uid,
+				_id: ObjectId(req.params.id),
+				userID: ObjectId(req.user.uid),
 			})
 		}
 
@@ -148,7 +148,7 @@ router.delete("/:id", verifyAdminAccess, async (req, res) => {
 // Get user orders - authorized user & admin only
 router.get("/user/:id", verifyAuthorization, async (req, res) => {
 	try {
-		let orders = await Order.find({ userID: req.params.id })
+		let orders = await Order.find({ userID: ObjectId(req.params.id) })
 		return res.json(orders)
 
 	} catch (err) {

@@ -1,14 +1,18 @@
 const mongoose = require('mongoose')
 
+const ObjectId = mongoose.Schema.ObjectId
+
 const OrderSchema = new mongoose.Schema({
 	userID: {
-		type: String,
+		type: ObjectId,
+		ref: 'User',
 		required: true,
 	},
 	products: [
 		{
-			productID: { 
-				type: String,
+			productID: {
+				type: ObjectId,
+				ref: 'Product',
 				required: true,
 			}, 
 			quantity: { 

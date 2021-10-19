@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const { celebrate } = require("celebrate")
+const ObjectId = require("mongoose").Types.ObjectId
 
 const Cart = require("../models/Cart.model")
 const { cart: cartSchema } = require('../models/schema')
@@ -31,7 +32,7 @@ router.post("/",
 
 	try {
 		await Cart.create({ 
-			userID: req.user.uid,
+			userID: ObjectId(req.user.uid),
 			products,
 		})
 		return res.json(cartResponse.cartCreated)
@@ -45,7 +46,7 @@ router.post("/",
 // Get a cart - authorized user & admin only
 router.get("/:id", verifyAuthorization, async (req, res) => {
 	try {
-		let cart = await Cart.findOne({ userID: req.params.id })
+		let cart = await Cart.findOne({ userID: ObjectId(req.params.id) })
 		return res.json(cart)
 
 	} catch (err) {
@@ -63,7 +64,7 @@ router.put("/:id",
 
 	try {
 		await Cart.updateOne(
-			{userID: req.params.id},
+			{userID: ObjectId(req.params.id)},
 			{$push: { products }},
 			{new: true},
 		)
@@ -78,7 +79,7 @@ router.put("/:id",
 // Delete a cart - authorized user & admin only
 router.delete("/:id", verifyAuthorization, async (req, res) => {
 	try {
-		await Cart.deleteOne({ userID: req.params.id })
+		await Cart.deleteOne({ userID: ObjectId(req.params.id) })
 		res.json(cartResponse.cartDeleted)
 
 	} catch (err) {
