@@ -3,19 +3,23 @@ lockfileVersion: 5.3
 specifiers:
   bcryptjs: ^2.4.3
   celebrate: ^15.0.0
+  cors: ^2.8.5
   dotenv: ^10.0.0
   express: ^4.17.1
   jsonwebtoken: ^8.5.1
   mongoose: ^6.0.2
   nodemon: ^2.0.12
+  stripe: ^8.183.0
 
 dependencies:
   bcryptjs: 2.4.3
   celebrate: 15.0.0
+  cors: 2.8.5
   dotenv: 10.0.0
   express: 4.17.1
   jsonwebtoken: 8.5.1
   mongoose: 6.0.2
+  stripe: 8.183.0
 
 devDependencies:
   nodemon: 2.0.12
@@ -314,6 +318,14 @@ packages:
   /cookie/0.4.0:
     resolution: {integrity: sha512-+Hp8fLp57wnUSt0tY0tHEXh4voZRDnoIrZPqlo3DPiI4y9lwg/jqx+1Om94/W6ZaPDOUbnjOt/99w66zk+l1Xg==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /cors/2.8.5:
+    resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
+    engines: {node: '>= 0.10'}
+    dependencies:
+      object-assign: 4.1.1
+      vary: 1.1.2
     dev: false
 
   /crypto-random-string/2.0.0:
@@ -983,6 +995,11 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /object-assign/4.1.1:
+    resolution: {integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
   /on-finished/2.3.0:
     resolution: {integrity: sha1-IPEzZIGwg811M3mSoWlxqi2QaUc=}
     engines: {node: '>= 0.8'}
@@ -1248,6 +1265,14 @@ packages:
     resolution: {integrity: sha1-PFMZQukIwml8DsNEhYwobHygpgo=}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /stripe/8.183.0:
+    resolution: {integrity: sha512-QcM3nimH1CuP49VPPRt36Wgfu4QoS+Wm0eyGMis7Ej+seWFKqMffMdx7TE2gn8dVsJIOA1kDuIbAQGqpZHozGA==}
+    engines: {node: ^8.1 || >=10.*}
+    dependencies:
+      '@types/node': 16.10.2
+      qs: 6.7.0
+    dev: false
 
   /supports-color/5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}

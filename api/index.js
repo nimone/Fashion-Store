@@ -1,12 +1,15 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
+const cors = require('cors')
+dotenv.config()
 
 const authRouter = require('./routes/auth') 
 const userRouter = require('./routes/user') 
 const productRouter = require('./routes/product') 
 const cartRouter = require('./routes/cart') 
 const orderRouter = require('./routes/order')
+const checkoutRouter = require('./routes/checkout')
 const { 
   handleMalformedJson,
   formatCelebrateErrors
@@ -14,7 +17,6 @@ const {
 
 const app = express()
 
-dotenv.config()
 
 // mongodb
 mongoose.connect(process.env.DB_URL, {
@@ -25,6 +27,7 @@ mongoose.connect(process.env.DB_URL, {
 
 
 // global middlewares
+app.use(cors())
 app.use(express.json())
 app.use(handleMalformedJson) // handle common req errors
 
@@ -35,6 +38,7 @@ app.use("/users", userRouter)
 app.use("/products", productRouter)
 app.use("/carts", cartRouter)
 app.use("/orders", orderRouter)
+app.use("/checkout", checkoutRouter)
 
 // server status
 app.get("/", (req, res) => {
