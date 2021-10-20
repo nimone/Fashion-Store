@@ -1,12 +1,10 @@
 import { useState } from 'react'
 
-import Checkout from './components/Checkout'
 
 export default function App() {
   return (
     <div className="App">
-      <h1>Ecommerce App</h1>
-      <Checkout />
+      <h1 className="text-5xl font-bold">Ecommerce App</h1>
     </div>
   );
 }
