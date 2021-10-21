@@ -10,7 +10,8 @@
     "@stripe/react-stripe-js": "^1.6.0",
     "@stripe/stripe-js": "^1.20.2",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react-dom": "^17.0.0",
+    "react-router-dom": "^5.3.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.0",
