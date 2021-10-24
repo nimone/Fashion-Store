@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from "clsx"
 
-export default function Button({ className, children, link, secondary, ...props}) {
+export default function Button({ className, children, link, secondary, light, ...props}) {
 	return (
     <button 
       className={clsx(
@@ -14,7 +14,8 @@ export default function Button({ className, children, link, secondary, ...props}
         "focus:outline-none",
         (secondary || link) && "!bg-transparent !shadow-none",
         link && "!text-blue-800 hover:!text-blue-900",
-        secondary && "!text-gray-800",
+        (secondary || light) && "!text-gray-800",
+        light && "!bg-white !hover:bg-gray-200",
         className
       )}
       {...props}
