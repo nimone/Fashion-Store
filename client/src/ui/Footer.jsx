@@ -4,7 +4,7 @@ import { Facebook, Instagram, Twitter, MapPin, Phone, Mail } from "react-feather
 
 export default function Footer() {
 	return (
-		<section className="grid grid-cols-1 md:(grid-cols-3) border-t border-gray-300 bg-gray-200 px-4">
+		<footer className="grid grid-cols-1 md:(grid-cols-3) border-t border-gray-300 bg-gray-200 px-4">
 			<div className="m-6 flex-1">
 				<h2 className="text-4xl text-center md:text-left mb-4">BRAND</h2>
 				<p className="text-justify text-gray-700">Eiusmod duis reprehenderit quis cillum nisi anim consectetur occaecat cupidatat anim incididunt aliqua eiusmod ad consectetur in ut cupidatat proident dolore aute irure enim in in ut adipisicing in do est.</p>
@@ -69,6 +69,6 @@ export default function Footer() {
 					<img className="mx-auto md:mx-0" src="https://i.ibb.co/Qfvn4z6/payment.png" alt="payment providers" />
 				</div>
 			</div>
-		</section>
+		</footer>
 	)
 }

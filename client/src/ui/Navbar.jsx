@@ -3,8 +3,8 @@ import clsx from "clsx"
 import { Link } from "react-router-dom"
 import { Menu, Search, User, LogIn } from "react-feather"
 
-import Button from "./Button"
-import Input from "./Input"
+import Button from "@/components/Button"
+import Input from "@/components/Input"
 
 export default function Navbar() {
 	const [showMenu, setShowMenu] = useState(false)
