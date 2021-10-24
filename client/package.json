@@ -9,8 +9,10 @@
   "dependencies": {
     "@stripe/react-stripe-js": "^1.6.0",
     "@stripe/stripe-js": "^1.20.2",
+    "clsx": "^1.1.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "react-feather": "^2.0.9",
     "react-router-dom": "^5.3.0"
   },
   "devDependencies": {

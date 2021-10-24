@@ -4,15 +4,17 @@ import { Link } from "react-router-dom"
 import { Menu, Search, User, LogIn } from "react-feather"
 
 import Button from "./Button"
+import Input from "./Input"
 
 export default function Navbar() {
 	const [showMenu, setShowMenu] = useState(false)
 
 	return (
-		<div className={clsx(
+		<nav className={clsx(
 			"w-full flex flex-col justify-between items-center",
 			"sticky top-0 z-50 py-3 px-4",
-			"bg-gray-200 border-b border-gray-300",
+			"bg-gray-200/80 border-b border-gray-300",
+			"backdrop-filter backdrop-blur-lg",
 			"md:(flex-row py-1)"
 		)}>
 			<div className="w-full flex justify-between md:mx-0">
@@ -29,36 +31,32 @@ export default function Navbar() {
 				showMenu && "!flex flex-col mt-4",
 				"md:(flex flex-row mt-0)"
 			)}>
-				<form className="flex mr-8">
-					<input type="text" placeholder="search" />
-					<button type="submit">
-						<Search className="w-6 h-6" />
-					</button>
-				</form>
+				<Input 
+					icon={<Search />} 
+					placeholder="Search..."
+				/>
 				<ul className={clsx(
 					"flex flex-col items-center",
 					"text-lg",
 					showMenu && "mt-4",
-					"md:(flex-row space-x-2 text-base mt-0)"
+					"md:(flex-row text-base mt-0)"
 				)}>
 					<li>
 						<Link to="/register">
 							<Button>
-								<User className="w-5 h-5 mr-2" />Register
+								<User width={20} height={20} className="mr-2" />Register
 							</Button>
 						</Link>
 					</li>
 					<li>
 						<Link to="/login">
-							<Button link>
-								<LogIn className="w-5 h-5 mr-2" /> Login
+							<Button secondary>
+								<LogIn width={20} height={20} className="mr-2" /> Login
 							</Button>
 						</Link>
 					</li>
 				</ul>
 			</div>
-
-
-		</div>
+		</nav>
 	)
 }
