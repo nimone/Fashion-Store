@@ -8,7 +8,11 @@ import Card from "./Card"
 export default function Category({ title, imgSrc, link }) {
 	return (
 		<Link to={link}>
-			<Card imgSrc={imgSrc} className="!max-w-40 sm:(!max-w-56)">
+			<Card 
+				imgSrc={imgSrc} 
+				className={clsx(
+					"!max-w-48 !max-h-sm sm:(!max-w-64)",
+				)}>
 				<div className={clsx(
 	      	"absolute inset-0 text-white text-center",
 	      	"flex justify-center items-center",

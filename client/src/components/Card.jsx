@@ -5,8 +5,8 @@ export default function Card({ imgSrc, children, className }) {
 	return (
 		<div className={clsx(
 			"max-w-72 relative overflow-hidden group",
-			"bg-white m-2",
-			"shadow-md rounded-lg",
+			"bg-white",
+			"shadow-md",
 			"hover:shadow-lg",
 			className,
 		)}

@@ -7,20 +7,26 @@ import Card from "./Card"
 
 export default function Product({ link, imgSrc, price }) {
 	return (
-		<Card imgSrc={imgSrc} className="!max-w-72 sm:(!max-w-xs)">
+		<Card 
+			imgSrc={imgSrc} 
+			className={clsx(
+				"!max-w-72 !max-h-xs",
+				"rounded-lg m-2",
+			)}
+		>
 			<div className={clsx(
       	"absolute inset-0 text-black text-center",
       	"flex flex-col justify-center items-center",
       	"opacity-0 transition ease-out",
       	"group-hover:(opacity-100 bg-black/20)"
     	)}>
-    		<button className="m-6 bg-white w-12 h-12 flex justify-center items-center rounded-full transition-all duration-500 ease-out hover:w-20">
-    			<ShoppingCart className="w-6 h-6"/>
-    		</button>
-    		<Link 
-    			to={link}
-    			className="m-6 bg-white w-12 h-12 flex justify-center items-center rounded-full transition-all duration-500 ease-out hover:w-20">
-    			<Search className="w-6 h-6" />
+    		<ProductButton>
+    			<ShoppingCart />
+    		</ProductButton>
+    		<Link to={link}>
+	    		<ProductButton>
+	    			<Search />
+	    		</ProductButton>
     		</Link>
       </div>
     	<div className={clsx(
@@ -31,5 +37,13 @@ export default function Product({ link, imgSrc, price }) {
     		${price}
     	</div>
 		</Card>
+	)
+}
+
+function ProductButton({ children }) {
+	return (
+		<button className="m-6 bg-white w-12 h-12 flex justify-center items-center rounded-full transition-all duration-300 ease-out hover:(w-24)">
+			{children}
+		</button>
 	)
 }
