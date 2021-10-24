@@ -15,7 +15,7 @@ export default function HomePage() {
 			</section>
 			<section className="my-14">
 				<h2 className="text-3xl font-medium">Popular Products</h2>
-				<ProductList products={products} />
+				<ProductList products={popularProducts} />
 			</section>
 			<section className="my-20">
 				<Newsletter />

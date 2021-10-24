@@ -1,6 +1,4 @@
 import React from 'react'
-import { Link } from "react-router-dom"
-import { ShoppingCart, Search } from "react-feather"
 import clsx from "clsx"
 
 export default function Card({ imgSrc, children, className }) {

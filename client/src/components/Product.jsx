@@ -1,8 +1,11 @@
 import React from 'react'
+import { Link } from "react-router-dom"
+import { ShoppingCart, Search } from "react-feather"
+import clsx from "clsx"
 
 import Card from "./Card"
 
-export function Product({ link, imgSrc, price }) {
+export default function Product({ link, imgSrc, price }) {
 	return (
 		<Card imgSrc={imgSrc} className="!max-w-72 sm:(!max-w-xs)">
 			<div className={clsx(

@@ -1,8 +1,11 @@
 import React from 'react'
+import { Link } from "react-router-dom"
+import { ShoppingCart, Search } from "react-feather"
+import clsx from "clsx"
 
 import Card from "./Card"
 
-export function Category({ title, imgSrc, link }) {
+export default function Category({ title, imgSrc, link }) {
 	return (
 		<Link to={link}>
 			<Card imgSrc={imgSrc} className="!max-w-40 sm:(!max-w-56)">
