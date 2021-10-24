@@ -1,36 +1,17 @@
-import React, { useState } from 'react'
-import { Link } from "react-router-dom"
+import React from 'react'
+
+import LoginForm from "@/ui/LoginForm"
 
 export default function LoginPage() {
-	const [email, setEmail] = useState("")
-	const [password, setPassword] = useState("")
-
-	const handleLogin = e => {
-		e.preventDefault()
-		console.log(email, password)
+	const handleLogin = userData => {
+		console.log(userData)
 	}
+	
 	return (
 		<main className="flex justify-center h-screen items-center bg-gray-300">
-			<div className="p-6 rounded-lg bg-white">
-				<form 
-					onSubmit={handleLogin}
-					className="flex items-center flex-col space-y-4"
-				>
-					<input 
-						value={email}
-						onChange={e => setEmail(e.target.value)}
-						type="email" placeholder="email" required />
-					<input 
-						value={password}
-						onChange={e => setPassword(e.target.value)}
-						type="password" placeholder="password" required />
-					<button type="submit">Login</button>
-					<Link to="/register">
-						<span className="text-blue-500">
-							Create an account
-						</span>
-					</Link>
-				</form>
+			<div className="min-w-sm p-6 rounded-lg bg-white">
+				<h3 className="text-2xl font-bold text-center mb-6">Login to your account</h3>
+				<LoginForm onSubmit={handleLogin} />
 			</div>
 		</main>
 	)
