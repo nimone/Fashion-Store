@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import ScrollToTop from "@/ScrollToTop"
 
 import Navbar from "@/ui/Navbar"
 import Footer from "@/ui/Footer"
@@ -14,6 +15,7 @@ export default function App() {
   return (
     <Router>      
       <Navbar />
+      <ScrollToTop>
       <Switch>
         <Route exact path="/">
           <HomePage />
@@ -35,6 +37,7 @@ export default function App() {
           <NotFoundPage />
         </Route>
       </Switch>
+      </ScrollToTop>
 
       <Footer />
     </Router>
