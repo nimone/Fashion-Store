@@ -35,7 +35,7 @@ export default function LoginForm({ onSubmit }) {
 			{error && <Alert heading="Error!" body={error} danger />}
 
 			<Button 
-				className="w-full !mt- !text-base !rounded-full" 
+				className="w-full !mt-6 !text-base !rounded-full" 
 				type="submit"
 			>Login</Button>
 				
