@@ -7,6 +7,8 @@ import HomePage from "@/pages/HomePage"
 import LoginPage from "@/pages/LoginPage"
 import RegisterPage from "@/pages/RegisterPage"
 import NotFoundPage from "@/pages/404Page"
+import ProductsPage from "@/pages/ProductsPage"
+import ProductDetailsPage from "@/pages/ProductDetailsPage"
 
 export default function App() {
   return (
@@ -21,9 +23,15 @@ export default function App() {
         </Route>        
         <Route path="/register">
           <RegisterPage />
+        </Route>
+        <Route exact path="/products">
+          <ProductsPage />
+        </Route>
+        <Route path="/products/:id">
+          <ProductDetailsPage />
         </Route>        
 
-        <Route path="/*">
+        <Route path={["/404", "/*"]}>
           <NotFoundPage />
         </Route>
       </Switch>
