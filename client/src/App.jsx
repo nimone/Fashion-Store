@@ -6,6 +6,7 @@ import Footer from "@/ui/Footer"
 import HomePage from "@/pages/HomePage"
 import LoginPage from "@/pages/LoginPage"
 import RegisterPage from "@/pages/RegisterPage"
+import NotFoundPage from "@/pages/404Page"
 
 export default function App() {
   return (
@@ -20,6 +21,10 @@ export default function App() {
         </Route>        
         <Route path="/register">
           <RegisterPage />
+        </Route>        
+
+        <Route path="/*">
+          <NotFoundPage />
         </Route>
       </Switch>
 
