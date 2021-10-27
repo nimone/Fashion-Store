@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from "clsx"
 
-export default function Input({ icon, classNameName, ...props}) {
+export default function Input({ icon, className, ...props}) {
 	const input = 
 		<input 
 			type="text" 
@@ -9,7 +9,7 @@ export default function Input({ icon, classNameName, ...props}) {
 				"w-full min-w-56 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg p-2", 
 				"focus:(outline-none ring ring-gray-300)",
 				icon && "pl-10",
-				classNameName,
+				className,
 			)}
 			{...props}
 		/>
