@@ -42,20 +42,20 @@ export default function Navbar() {
 		          <span className="block font-medium text-gray-900 truncate">nimogha@gmail.com</span>
 		        </div>
 		        <Select>
-			        <Option>
-			          <Link to="#">Dashboard</Link>
-			        </Option>
-			        <Option>
-			          <Link to="#">Orders</Link>
-			        </Option>
-			        <Option>
-			          <Link to="#">Account</Link>
-			        </Option>
-			        <Option>
-			          <Link to="#" className="flex items-center">
+		          <Link to="#">
+				        <Option>Dashboard</Option>
+		          </Link>
+			        <Link to="/orders">
+			        	<Option>Orders</Option>
+		          </Link>
+		          <Link to="#">
+				        <Option>Account</Option>
+		          </Link>
+		          <Link to="#">
+				        <Option className="flex items-center">
 			          	<LogOut width={20} height={20} className="mr-2" />Logout
-			          </Link>
-			        </Option>
+				        </Option>
+		          </Link>
 		        </Select>
 		      </DropDown>
 				)}
@@ -89,20 +89,20 @@ export default function Navbar() {
 					/>
 				</div>
 				<ul className={clsx(
-					"flex flex-col items-center order-3",
+					"flex flex-col order-3",
 					showMenu && "mt-4",
 					"md:(flex-row text-base mt-0 space-x-2)"
 				)}>
 					<li>
 						<Link to="/login">
-							<Button secondary>
+							<Button secondary className="w-full md:w-auto">
 								<LogIn width={20} height={20} className="mr-2" />Login
 							</Button>
 						</Link>
 					</li>
 					<li>
 						<Link to="/register">
-							<Button>
+							<Button className="w-full md:w-auto">
 								<User width={20} height={20} className="mr-2" />Register
 							</Button>
 						</Link>
