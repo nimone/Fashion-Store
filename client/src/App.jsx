@@ -10,6 +10,7 @@ import RegisterPage from "@/pages/RegisterPage"
 import NotFoundPage from "@/pages/404Page"
 import ProductsPage from "@/pages/ProductsPage"
 import ProductDetailsPage from "@/pages/ProductDetailsPage"
+import CartPage from "@/pages/CartPage"
 
 export default function App() {
   return (
@@ -31,6 +32,9 @@ export default function App() {
         </Route>
         <Route path="/products/:id">
           <ProductDetailsPage />
+        </Route>
+        <Route path="/cart">
+          <CartPage />
         </Route>        
 
         <Route path={["/404", "/*"]}>
