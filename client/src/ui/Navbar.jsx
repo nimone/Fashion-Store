@@ -29,36 +29,41 @@ export default function Navbar() {
 				<Link to="/cart" className="flex items-center">
 					<ShoppingCart width={24} height={24} />
 				</Link>
-
-				<button 
-					onClick={() => setShowDropDown(prev => !prev)}
-					className="bg-gray-800 h-8 w-8 rounded-full overflow-hidden focus:(ring-4 ring-gray-300 outline-none)">
-	        <img className="object-cover" src="https://avatars.githubusercontent.com/u/30614282" alt="user avatar" />
-	      </button>
-	      {showDropDown && (
-		      <DropDown>
-		        <div className="px-4 py-3">
-		          <span className="block">Nishant Mogha</span>
-		          <span className="block font-medium text-gray-900 truncate">nimogha@gmail.com</span>
-		        </div>
-		        <Select>
-		          <Link to="#">
-				        <Option>Dashboard</Option>
-		          </Link>
-			        <Link to="/orders">
-			        	<Option>Orders</Option>
-		          </Link>
-		          <Link to="#">
-				        <Option>Account</Option>
-		          </Link>
-		          <Link to="#">
-				        <Option className="flex items-center">
-			          	<LogOut width={20} height={20} className="mr-2" />Logout
-				        </Option>
-		          </Link>
-		        </Select>
-		      </DropDown>
-				)}
+				<div className="relative flex items-center">					
+					<button 
+						onClick={() => setShowDropDown(prev => !prev)}
+						className="bg-gray-800 h-8 w-8 rounded-full overflow-hidden focus:(ring-4 ring-gray-300 outline-none)">
+		        <img 
+		        	className="object-cover" 
+		        	src="https://avatars.githubusercontent.com/u/30614282" 
+		        	alt="user avatar" 
+		        />
+		      </button>
+		      {showDropDown && (
+			      <DropDown className="mt-10 right-0">
+			        <div className="px-4 py-3">
+			          <span className="block">Nishant Mogha</span>
+			          <span className="block font-medium text-gray-900 truncate">nimogha@gmail.com</span>
+			        </div>
+			        <Select>
+			          <Link to="#">
+					        <Option>Dashboard</Option>
+			          </Link>
+				        <Link to="/orders">
+				        	<Option>Orders</Option>
+			          </Link>
+			          <Link to="#">
+					        <Option>Account</Option>
+			          </Link>
+			          <Link to="#">
+					        <Option className="flex items-center">
+				          	<LogOut width={20} height={20} className="mr-2" />Logout
+					        </Option>
+			          </Link>
+			        </Select>
+			      </DropDown>
+					)}
+				</div>
 				<button className="md:hidden flex items-center focus:outline-none">
 					{showMenu 
 						? <X width={24} height={24} onClick={() => setShowMenu(false)} />
