@@ -11,6 +11,7 @@ import NotFoundPage from "@/pages/404Page"
 import ProductsPage from "@/pages/ProductsPage"
 import ProductDetailsPage from "@/pages/ProductDetailsPage"
 import CartPage from "@/pages/CartPage"
+import OrdersPage from "@/pages/OrdersPage"
 
 export default function App() {
   return (
@@ -35,6 +36,9 @@ export default function App() {
         </Route>
         <Route path="/cart">
           <CartPage />
+        </Route>
+        <Route exact path="/orders">
+          <OrdersPage />
         </Route>        
 
         <Route path={["/404", "/*"]}>

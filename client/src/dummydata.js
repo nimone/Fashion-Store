@@ -103,3 +103,18 @@ export const popularProducts = [
     price: 65,
   },
 ]
+
+export const dummyOrderStatus = ['pending', 'shipped', 'in transit', 'delivered']
+
+export const dummyOrders = [0,3,6].map(num => ({
+  products: [...popularProducts].splice(num, 3).map(p => ({
+    product: p,
+    quantity: Math.floor(Math.random() * 3 + 1),
+  }))
+})).map((order, i) => ({
+  ...order,
+  id: i,
+  amount: order.products.reduce((sum, p) => sum + (p.product.price * p.quantity), 0),
+  address: "221b Baker St, London NW1 6XE, UK",
+  status: dummyOrderStatus[Math.floor(Math.random() * dummyOrderStatus.length)],
+}))
