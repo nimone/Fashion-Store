@@ -12,6 +12,7 @@ import ProductsPage from "@/pages/ProductsPage"
 import ProductDetailsPage from "@/pages/ProductDetailsPage"
 import CartPage from "@/pages/CartPage"
 import OrdersPage from "@/pages/OrdersPage"
+import OrderDetailsPage from "@/pages/OrderDetailsPage"
 
 export default function App() {
   return (
@@ -39,6 +40,9 @@ export default function App() {
         </Route>
         <Route exact path="/orders">
           <OrdersPage />
+        </Route>
+        <Route path="/orders/:id">
+          <OrderDetailsPage />
         </Route>        
 
         <Route path={["/404", "/*"]}>
