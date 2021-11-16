@@ -13,6 +13,7 @@ import ProductDetailsPage from "@/pages/ProductDetailsPage"
 import CartPage from "@/pages/CartPage"
 import OrdersPage from "@/pages/OrdersPage"
 import OrderDetailsPage from "@/pages/OrderDetailsPage"
+import AccountPage from "@/pages/AccountPage"
 
 export default function App() {
   return (
@@ -43,7 +44,10 @@ export default function App() {
         </Route>
         <Route path="/orders/:id">
           <OrderDetailsPage />
-        </Route>        
+        </Route>
+        <Route path="/account">
+          <AccountPage />
+        </Route>
 
         <Route path={["/404", "/*"]}>
           <NotFoundPage />
