@@ -46,13 +46,13 @@ export default function Navbar() {
 			          <span className="block font-medium text-gray-900 truncate">nimogha@gmail.com</span>
 			        </div>
 			        <Select>
-			          <Link to="#">
-					        <Option>Dashboard</Option>
+			          <Link to="/cart">
+					        <Option>Cart</Option>
 			          </Link>
 				        <Link to="/orders">
 				        	<Option>Orders</Option>
 			          </Link>
-			          <Link to="#">
+			          <Link to="/account">
 					        <Option>Account</Option>
 			          </Link>
 			          <Link to="#">
