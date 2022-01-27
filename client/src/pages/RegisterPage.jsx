@@ -1,11 +1,25 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { sliderItems } from '@/dummydata'
 
 import RegisterForm from "@/ui/RegisterForm"
+import api from '../api'
 
 export default function RegisterPage() {
-	const handleRegister = userData => {
+	const history = useHistory()
+	
+	const handleRegister = async userData => {
 		console.log(userData)
+		const resp = await api.registerUser(userData)
+		console.log(resp)
+		if (resp.status == "ok") {
+			const loginResp = await api.loginUser(userData)
+			console.log(loginResp)
+			if (loginResp.status == "ok") {
+				history.push("/account")
+			}
+		}
+		return resp
 	}
 
 	const randomSlide = sliderItems[Math.floor(Math.random() * sliderItems.length)]

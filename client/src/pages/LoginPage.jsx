@@ -1,11 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { sliderItems } from '@/dummydata'
 
 import LoginForm from "@/ui/LoginForm"
+import api from '../api'
+import { useHistory } from 'react-router-dom'
 
 export default function LoginPage() {
-	const handleLogin = userData => {
+	const history = useHistory()
+
+	const handleLogin = async userData => {
 		console.log(userData)
+		const resp = await api.loginUser(userData)
+		console.log(resp)
+		if (resp.status == "ok") {
+			history.push("/account")
+		}
+		return resp
 	}
 	const randomSlide = sliderItems[Math.floor(Math.random() * sliderItems.length)]
 
