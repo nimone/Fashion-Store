@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
 import { Mail, Lock } from "react-feather"
+import Loader from '../components/Loader'
 
 import Input from "@/components/Input"
 import Button from "@/components/Button"
@@ -10,11 +11,22 @@ export default function LoginForm({ onSubmit }) {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const [error, setError] = useState("")
+	const [loading, setLoading] = useState("")
 
-	const handleSubmit = e => {
+	const handleSubmit = async e => {
 		e.preventDefault()
-		onSubmit({email, password})
+		setLoading(true)
+		const resp = await onSubmit({email, password})
+		setLoading(false)
+		if (resp.status == "error") {
+			setError(resp.message)
+		}
 	}
+	useEffect(() => {
+		return () => {
+			setLoading(false)
+		}
+	}, [])
 
 	return (
 		<form
@@ -37,7 +49,10 @@ export default function LoginForm({ onSubmit }) {
 			<Button 
 				className="w-full !mt-6 !text-base !rounded-full" 
 				type="submit"
-			>Login</Button>
+				disabled={loading}
+			>
+				{loading ? <Loader /> : "Login"}
+			</Button>
 				
 			<Link to="/register">
 				<Button link>

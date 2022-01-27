@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Link } from "react-router-dom"
 import { User, Mail, Lock } from "react-feather"
@@ -6,6 +6,7 @@ import { User, Mail, Lock } from "react-feather"
 import Input from "@/components/Input"
 import Button from "@/components/Button"
 import Alert from "@/components/Alert"
+import Loader from '../components/Loader'
 
 export default function RegisterForm({ onSubmit }) {
 	const [fullname, setFullname] = useState("")
@@ -13,8 +14,9 @@ export default function RegisterForm({ onSubmit }) {
 	const [password, setPassword] = useState("")
 	const [confirmPassword, setConfirmPassword] = useState("")
 	const [error, setError] = useState(null)
+	const [loading, setLoading] = useState(false)
 
-	const handleSubmit = e => {
+	const handleSubmit = async e => {
 		e.preventDefault()
 		if (password.length < 6) {
 			setError("password must be atleast 6 characters")
@@ -24,8 +26,19 @@ export default function RegisterForm({ onSubmit }) {
 			setError("passwords don't match")
 			return
 		}
-		onSubmit({fullname, email, password, confirmPassword})
+		setLoading(true)
+		const resp = await onSubmit({fullname, email, password, confirmPassword})
+		setLoading(false)
+		if (resp.status == "error") {
+			setError(resp.message)
+		}
 	}
+
+	useEffect(() => {
+		return () => {
+			setLoading(false)
+		}
+	}, [])
 
 	return (
 		<form 
@@ -58,7 +71,10 @@ export default function RegisterForm({ onSubmit }) {
 			<Button 
 				className="w-full !mt-6 !text-base !rounded-full" 
 				type="submit"
-			>Register</Button>
+				disabled={loading}
+			>
+				{loading ? <Loader /> : "Register"}
+			</Button>
 			
 			<Link to="/login">
 				<Button link>
