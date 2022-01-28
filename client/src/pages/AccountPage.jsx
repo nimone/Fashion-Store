@@ -1,26 +1,33 @@
-import React, { useState } from 'react'
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from 'react'
+import { Link, useHistory } from "react-router-dom"
 import clsx from "clsx"
 import { Edit2, User, Mail, Lock, ChevronRight, Package, ShoppingCart, LogOut } from "react-feather"
 
 import Container from "@/components/Container"
 import Input from "@/components/Input"
 import Button from "@/components/Button"
+import api from '../api'
 
-const dummyUserDetails = {
-	fullName: "Nishant Mogha",
-	"email": "nimogha@gmail.com",
-	avatarSrc: "https://avatars.githubusercontent.com/u/30614282",
-}
 
 export default function AccountPage() {
-	const [userDetails, setUserDetails] = useState({...dummyUserDetails})
+	const history = useHistory()
+	const [userDetails, setUserDetails] = useState({})
 	const [showEditForm, setShowEditForm] = useState(false)
 
 	const handleEdit = e => {
 		e.preventDefault()
 		console.log(userDetails)
 	}
+
+	useEffect(() => {
+		const user = api.getUser()
+		console.log(user)
+		if (user) {
+			setUserDetails(user)
+		} else {
+			history.push("/login")
+		}
+	}, [])
 
 	return (
 		<main className="min-h-screen my-14">
@@ -53,7 +60,7 @@ export default function AccountPage() {
 	      ) : (
 		    	<div>
 			      <div className="mb-2">
-				      <h3 className="text-xl font-light">{userDetails.fullName}</h3>
+				      <h3 className="text-xl font-light">{userDetails.fullname}</h3>
 				      <span>{userDetails.email}</span>
 			      </div>
 			      <Button secondary onClick={() => setShowEditForm(true)}>

@@ -42,7 +42,7 @@ router.get("/me", verifyToken, async (req, res) => {
 			req.user.uid,
 			{ password: 0 },
 		)
-		return res.json(user)
+		return res.json({"status": "ok", user})
 
 	} catch (err) {
 		console.error(err)
