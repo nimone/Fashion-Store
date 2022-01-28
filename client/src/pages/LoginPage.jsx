@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { sliderItems } from '@/dummydata'
 
 import LoginForm from "@/ui/LoginForm"
-import api from '../api'
+import api from '@/api'
 import { useHistory } from 'react-router-dom'
 
 export default function LoginPage() {

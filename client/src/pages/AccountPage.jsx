@@ -6,7 +6,7 @@ import { Edit2, User, Mail, Lock, ChevronRight, Package, ShoppingCart, LogOut } 
 import Container from "@/components/Container"
 import Input from "@/components/Input"
 import Button from "@/components/Button"
-import api from '../api'
+import api from '@/api'
 
 
 export default function AccountPage() {

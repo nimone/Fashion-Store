@@ -6,7 +6,7 @@ import { Menu, Search, User, LogIn, LogOut, X, ShoppingCart } from "react-feathe
 import Button from "@/components/Button"
 import Input from "@/components/Input"
 import DropDown, { Select, Option } from "@/components/DropDown"
-import api from '../api'
+import api from '@/api'
 
 export default function Navbar() {
 	const [showMenu, setShowMenu] = useState(false)

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { sliderItems } from '@/dummydata'
 
 import RegisterForm from "@/ui/RegisterForm"
-import api from '../api'
+import api from '@/api'
 
 export default function RegisterPage() {
 	const history = useHistory()
