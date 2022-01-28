@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { sliderItems } from '@/dummydata'
 
+import { UserContext } from '@/App'
 import LoginForm from "@/ui/LoginForm"
 import api from '@/api'
 import { useHistory } from 'react-router-dom'
 
 export default function LoginPage() {
+	const {setUser} = useContext(UserContext)
 	const history = useHistory()
 
 	const handleLogin = async userData => {
@@ -13,6 +15,7 @@ export default function LoginPage() {
 		const resp = await api.loginUser(userData)
 		console.log(resp)
 		if (resp.status == "ok") {
+			setUser(api.getUser())
 			history.push("/account")
 		}
 		return resp

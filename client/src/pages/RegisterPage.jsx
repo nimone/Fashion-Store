@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { sliderItems } from '@/dummydata'
 
+import { UserContext } from '@/App'
 import RegisterForm from "@/ui/RegisterForm"
 import api from '@/api'
 
 export default function RegisterPage() {
+	const {setUser} = useContext(UserContext)
 	const history = useHistory()
 	
 	const handleRegister = async userData => {
@@ -16,6 +18,7 @@ export default function RegisterPage() {
 			const loginResp = await api.loginUser(userData)
 			console.log(loginResp)
 			if (loginResp.status == "ok") {
+				setUser(api.getUser())
 				history.push("/account")
 			}
 		}

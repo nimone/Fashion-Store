@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import clsx from "clsx"
 import { Link } from "react-router-dom"
 import { Menu, Search, User, LogIn, LogOut, X, ShoppingCart } from "react-feather"
 
+import { UserContext } from '@/App'
 import Button from "@/components/Button"
 import Input from "@/components/Input"
 import DropDown, { Select, Option } from "@/components/DropDown"
 import api from '@/api'
 
 export default function Navbar() {
+	const {user, setUser} = useContext(UserContext)
 	const [showMenu, setShowMenu] = useState(false)
 	const [showDropDown, setShowDropDown] = useState(false)
 
@@ -31,20 +33,20 @@ export default function Navbar() {
 					<ShoppingCart width={24} height={24} />
 				</Link>
 				<div className="relative flex items-center">					
-					<button 
+					{user && <button 
 						onClick={() => setShowDropDown(prev => !prev)}
 						className="bg-gray-800 h-8 w-8 rounded-full overflow-hidden focus:(ring-4 ring-gray-300 outline-none)">
 		        <img 
 		        	className="object-cover" 
-		        	src="https://avatars.githubusercontent.com/u/30614282" 
+		        	src={user.avatarSrc} 
 		        	alt="user avatar" 
 		        />
-		      </button>
-		      {showDropDown && (
+		      </button>}
+		      {user && showDropDown && (
 			      <DropDown className="mt-10 right-0">
 			        <div className="px-4 py-3">
-			          <span className="block">Nishant Mogha</span>
-			          <span className="block font-medium text-gray-900 truncate">nimogha@gmail.com</span>
+			          <span className="block">{user.fullname}</span>
+			          <span className="block font-medium text-gray-900 truncate">{user.email}</span>
 			        </div>
 			        <Select>
 			          <Link to="/cart">
@@ -56,7 +58,10 @@ export default function Navbar() {
 			          <Link to="/account">
 					        <Option>Account</Option>
 			          </Link>
-			          <Link to="/" onClick={api.logoutUser}>
+			          <Link to="/" onClick={() => {
+									api.logoutUser()
+									setUser(null)
+								}}>
 					        <Option className="flex items-center">
 				          	<LogOut width={20} height={20} className="mr-2" />Logout
 					        </Option>
