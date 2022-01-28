@@ -6,6 +6,7 @@ import { Menu, Search, User, LogIn, LogOut, X, ShoppingCart } from "react-feathe
 import Button from "@/components/Button"
 import Input from "@/components/Input"
 import DropDown, { Select, Option } from "@/components/DropDown"
+import api from '../api'
 
 export default function Navbar() {
 	const [showMenu, setShowMenu] = useState(false)
@@ -55,7 +56,7 @@ export default function Navbar() {
 			          <Link to="/account">
 					        <Option>Account</Option>
 			          </Link>
-			          <Link to="#">
+			          <Link to="/" onClick={api.logoutUser}>
 					        <Option className="flex items-center">
 				          	<LogOut width={20} height={20} className="mr-2" />Logout
 					        </Option>

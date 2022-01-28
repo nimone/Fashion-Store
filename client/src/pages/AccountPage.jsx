@@ -80,7 +80,7 @@ export default function AccountPage() {
 						<AccountLink to="mailto:contact@brand.com">
 							<Mail className="mr-2" />Need Help? Contact Us
 						</AccountLink>
-						<AccountLink>
+						<AccountLink to="/" onClick={api.logoutUser}>
 							<LogOut className="mr-2" />Log out from this Account
 						</AccountLink>
 					</ul>

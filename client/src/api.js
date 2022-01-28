@@ -43,6 +43,10 @@ async function loginUser({email, password}) {
   return data
 }
 
+function logoutUser() {
+  localStorage.clear()
+}
+
 async function fetchUserDetails() {
   const resp =  await fetch(API_URL+"/users/me", {
     headers: {
@@ -59,6 +63,7 @@ async function fetchUserDetails() {
 export default {
   registerUser,
   loginUser,
+  logoutUser,
   getUser,
   fetchUserDetails,
 }
