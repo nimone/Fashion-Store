@@ -1,5 +1,13 @@
 const API_URL = "http://localhost:5000"
 
+function setAccessToken(token) {
+  localStorage.setItem('token', token)
+}
+
+function getAccessToken() {
+  return localStorage.getItem('token')
+}
+
 async function registerUser({fullname, email, password}) {
   const resp = await fetch(API_URL+"/auth/register", {
     method: "POST",
@@ -19,7 +27,12 @@ async function loginUser({email, password}) {
     },
     body: JSON.stringify({email, password}),
   })
-  return await resp.json()
+  const data = await resp.json()
+
+  if (data.accessToken) {
+    setAccessToken(data.accessToken)
+  }
+  return data
 }
 
 export default {
