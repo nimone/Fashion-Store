@@ -69,6 +69,7 @@ export default function Navbar() {
 						placeholder="Search..." 
 					/>
 				</div>
+			{!user && (
 				<ul className={clsx(
 					"flex flex-col order-3",
 					showMenu && "mt-4",
@@ -89,6 +90,7 @@ export default function Navbar() {
 						</Link>
 					</li>
 				</ul>
+			)}
 			</div>
 		</nav>
 	)

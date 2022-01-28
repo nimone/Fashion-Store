@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import ScrollToTop from "@/ScrollToTop"
 
 import Navbar from "@/ui/Navbar"
@@ -41,10 +41,10 @@ export default function App() {
             <HomePage />
           </Route>        
           <Route path="/login">
-            <LoginPage />
+            {!user ? <LoginPage /> : <Redirect to={{pathname: '/'}} />}
           </Route>        
           <Route path="/register">
-            <RegisterPage />
+            {!user ? <RegisterPage /> : <Redirect to={{pathname: '/'}} />}
           </Route>
           <Route exact path="/products">
             <ProductsPage />
@@ -56,13 +56,13 @@ export default function App() {
             <CartPage />
           </Route>
           <Route exact path="/orders">
-            <OrdersPage />
+            {user ? <OrdersPage /> : <Redirect to={{pathname: '/login'}} />}
           </Route>
           <Route path="/orders/:id">
-            <OrderDetailsPage />
+            {user ? <OrderDetailsPage /> : <Redirect to={{pathname: '/login'}} />}
           </Route>
           <Route path="/account">
-            <AccountPage />
+            {user ? <AccountPage /> : <Redirect to={{pathname: '/login'}} />}
           </Route>
 
           <Route path={["/404", "/*"]}>
