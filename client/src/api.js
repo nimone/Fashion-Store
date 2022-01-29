@@ -53,11 +53,14 @@ async function fetchUserDetails() {
       "x-access-token": getAccessToken(),
     }
   })
-  const user = await resp.json()
-  if (user.status == "ok") {
-    setUser(user.user)
+  const {status, user} = await resp.json()
+  if (status == "ok") {
+    if (!user.avatarSrc) {
+      user.avatarSrc = `https://avatars.dicebear.com/api/initials/${user.fullname}.svg`
+    }
+    setUser(user)
   }
-  return user
+  return {status, user}
 }
 
 export default {

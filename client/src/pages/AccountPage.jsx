@@ -31,8 +31,7 @@ export default function AccountPage() {
 			<div className="grid grid-cols-1 md:(grid-cols-2)">
 				<section className="flex flex-col items-center text-center space-y-2">
 					<div className={clsx(
-						"h-24 w-24 rounded-full overflow-hidden",
-						"bg-gray-800 mb-4",
+						"h-24 w-24 rounded-full overflow-hidden mb-4",
 						"sm:(w-32 h-32)",
 						"focus:(ring-4 ring-gray-300 outline-none)"
 					)}>

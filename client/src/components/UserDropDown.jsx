@@ -10,7 +10,7 @@ function UserDropDown({ user, onLogout }) {
     <div className="relative flex items-center">					
       <button 
         onClick={() => setShowDropDown(prev => !prev)}
-        className="bg-gray-800 h-8 w-8 rounded-full overflow-hidden focus:(ring-4 ring-gray-300 outline-none)">
+        className="h-8 w-8 rounded-full overflow-hidden focus:(ring-4 ring-gray-300 outline-none)">
         <img 
           className="object-cover" 
           src={user.avatarSrc} 
