@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { ChevronDown } from "react-feather"
 import { useLocation } from "react-router-dom"
 import { popularProducts } from "@/dummydata"
@@ -7,6 +7,7 @@ import ProductList from "@/ui/ProductList"
 import Container from "@/components/Container"
 import Button from "@/components/Button"
 import DropDown, { Select, Option } from "@/components/DropDown"
+import useClickOutside from "@/hooks/useClickOutside" 
 
 const sortOptions = [
   "popular",
@@ -20,12 +21,9 @@ export default function ProductsPage() {
   const [products, setProducts] = useState([...popularProducts])
   const [sort, setSort] = useState(0)
   const [showSortOptions, setShowSortOptions] = useState(false)
+  const dropDownRef = useClickOutside(() => setShowSortOptions(false))
 
   const category = query.get("category")
-
-  useEffect(() => {
-    setShowSortOptions(false)
-  }, [sort])
 
   return (
     <main>
@@ -34,7 +32,7 @@ export default function ProductsPage() {
         type="page"
       >
         <section className="flex justify-end">
-          <div className="relative">
+          <div className="relative" ref={dropDownRef}>
             <span className="font-bold">Sort:</span>
             <Button
               secondary
@@ -44,7 +42,7 @@ export default function ProductsPage() {
             </Button>
 
             {showSortOptions && (
-              <DropDown className="mt-10 inset-x-0">
+              <DropDown className="mt-10 inset-x-0" onClick={() => setShowSortOptions(false)}>
                 <Select>
                   {sortOptions.map((option, i) => (
                     <Option key={option} onClick={() => setSort(i)}>

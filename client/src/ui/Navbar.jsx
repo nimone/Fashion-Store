@@ -6,12 +6,14 @@ import { Menu, Search, User, LogIn, X, ShoppingCart } from "react-feather"
 import { UserContext } from '@/App'
 import Button from "@/components/Button"
 import Input from "@/components/Input"
-import UserDropDown from '../components/UserDropDown'
+import UserDropDown from '@/components/UserDropDown'
 import api from "@/api"
+import useClickOutside from '@/hooks/useClickOutside'
 
 export default function Navbar() {
 	const {user, setUser} = useContext(UserContext)
 	const [showMenu, setShowMenu] = useState(false)
+	const navbarRef = useClickOutside(() => setShowMenu(false))
 
 	return (
 		<nav className={clsx(
@@ -20,7 +22,7 @@ export default function Navbar() {
 			"bg-gray-200/90 border-b border-gray-300",
 			"backdrop-filter backdrop-blur-lg shadow-sm",
 			"md:(py-1)"
-		)}>
+		)} ref={navbarRef}>
 			<div className="flex justify-between items-center md:mx-0">
 				<Link to="/">
 					<h3 className="text-medium text-2xl">BRAND</h3>
@@ -57,7 +59,7 @@ export default function Navbar() {
 					"flex flex-col items-center order-2",
 					"mt-8 mb-2 text-xl space-y-1 divide-y-2 divide-gray-200",
 					"md:(flex-row text-base m-0 space-y-0 divide-y-0 divide-x)"
-				)}>
+				)} onClick={() => setShowMenu(false)}>
 					<NavLink to="/products?category=men">Men</NavLink>
 					<NavLink to="/products?category=women">Women</NavLink>
 					<NavLink to="/products">All Products</NavLink>
