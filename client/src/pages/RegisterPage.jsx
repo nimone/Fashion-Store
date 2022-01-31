@@ -19,6 +19,7 @@ export default function RegisterPage() {
 			console.log(loginResp)
 			if (loginResp.status == "ok") {
 				setUser(api.getUser())
+				await api.createUserCart()
 				history.push("/account")
 			}
 		}

@@ -47,6 +47,16 @@ function logoutUser() {
   localStorage.clear()
 }
 
+async function createUserCart() {
+  const resp = await fetch(API_URL+"/carts", {
+    method: "POST",
+    headers: {
+      "x-access-token": getAccessToken(),
+    },
+  })
+  return await resp.json()
+}
+
 async function fetchUserDetails() {
   const resp =  await fetch(API_URL+"/users/me", {
     headers: {
@@ -81,4 +91,5 @@ export default {
   fetchUserDetails,
   fetchProducts,
   fetchProduct,
+  createUserCart,
 }
