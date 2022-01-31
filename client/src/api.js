@@ -68,6 +68,10 @@ async function fetchProducts(category, newArrivals=false) {
   const resp = await fetch(API_URL+"/products?"+query)
   return await resp.json()
 }
+async function fetchProduct(id) {
+  const resp = await fetch(API_URL+"/products/"+id)
+  return await resp.json()
+}
 
 export default {
   registerUser,
@@ -76,4 +80,5 @@ export default {
   getUser,
   fetchUserDetails,
   fetchProducts,
+  fetchProduct,
 }

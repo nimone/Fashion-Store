@@ -1,16 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, Redirect, useHistory } from "react-router-dom"
-import { popularProducts } from '@/dummydata'
 import { ChevronLeft } from "react-feather"
 
 import Button from "@/components/Button"
+import Loader from "@/components/Loader"
+import api from '../api'
 
 export default function ProductDetailsPage() {
 	const history = useHistory()
 	const { id } = useParams()
-	const product = popularProducts.find(p => p.id == id)
+	const [product, setProduct] = useState(null)
 
-	if (!product) return <Redirect to="/404" /> 
+	useEffect(() => {
+		(async () => {
+			const resp = await api.fetchProduct(id)
+			if (resp.status == "error") {
+				return history.replace("/404")
+			}
+			setProduct(resp)
+		})()
+	}, [id])
+
+	if (!product) return <Loader /> 
 
 	return (
 		<main className="relative mb-20">
@@ -23,7 +34,7 @@ export default function ProductDetailsPage() {
 				</section>
 				<section className="flex flex-col justify-center space-y-6 text-gray-600">
 					<h2 className="text-4xl text-gray-800">{product.name}</h2>
-					<p className="text-xl">Lorem ipsum qui ad eiusmod commodo reprehenderit ea deserunt dolore do in excepteur laboris commodo ut consequat anim nostrud nostrud culpa occaecat sed aliquip dolor amet eu occaecat pariatur consectetur officia.</p>
+					<p className="text-xl">{product.description}</p>
 					<span className="text-2xl font-medium">${product.price}</span>
 					<Button className="sm:max-w-xs text-base">Add to Cart</Button>
 				</section>
