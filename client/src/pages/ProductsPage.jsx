@@ -1,13 +1,13 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { ChevronDown } from "react-feather"
 import { useLocation } from "react-router-dom"
-import { popularProducts } from "@/dummydata"
 
 import ProductList from "@/ui/ProductList"
 import Container from "@/components/Container"
 import Button from "@/components/Button"
 import DropDown, { Select, Option } from "@/components/DropDown"
 import useClickOutside from "@/hooks/useClickOutside" 
+import api from "../api"
 
 const sortOptions = [
   "popular",
@@ -18,12 +18,21 @@ const sortOptions = [
 
 export default function ProductsPage() {
   const query = new URLSearchParams(useLocation().search)
-  const [products, setProducts] = useState([...popularProducts])
+  const [products, setProducts] = useState([])
   const [sort, setSort] = useState(0)
   const [showSortOptions, setShowSortOptions] = useState(false)
   const dropDownRef = useClickOutside(() => setShowSortOptions(false))
 
   const category = query.get("category")
+
+  useEffect(() => {
+    (async () => {
+      const resp = await api.fetchProducts(category)
+      if (resp.status != "error") {
+        setProducts(resp)
+      }
+    })()
+  }, [category])
 
   return (
     <main>
@@ -54,7 +63,7 @@ export default function ProductsPage() {
             )}
           </div>
         </section>
-        <ProductList products={popularProducts} />
+        <ProductList products={products} />
       </Container>
     </main>
   )

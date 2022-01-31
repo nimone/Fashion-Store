@@ -63,10 +63,17 @@ async function fetchUserDetails() {
   return {status, user}
 }
 
+async function fetchProducts(category, newArrivals=false) {
+  let query = `new=${newArrivals ? "true" : "false"}${category ? "&category="+category : ""}`
+  const resp = await fetch(API_URL+"/products?"+query)
+  return await resp.json()
+}
+
 export default {
   registerUser,
   loginUser,
   logoutUser,
   getUser,
   fetchUserDetails,
+  fetchProducts,
 }

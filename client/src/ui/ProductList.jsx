@@ -7,10 +7,10 @@ export default function ProductList({ products }) {
 		<div className="flex flex-wrap justify-center">
 			{products.map(product => (
 				<Product
-					key={product.id}
+					key={product._id}
 					imgSrc={product.image}
 					price={product.price}
-					link={`/products/${product.id}`}
+					link={`/products/${product._id}`}
 				/>					
 			))}
 		</div>
