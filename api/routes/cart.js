@@ -47,6 +47,10 @@ router.post("/",
 router.get("/:id", verifyAuthorization, async (req, res) => {
 	try {
 		let cart = await Cart.findOne({ userID: ObjectId(req.params.id) })
+		cart = await cart.populate({
+			path: 'products.productID',
+			select: ['title','price']
+		})
 		return res.json(cart)
 
 	} catch (err) {

@@ -57,6 +57,29 @@ async function createUserCart() {
   return await resp.json()
 }
 
+async function getUserCart() {
+  const userID = getUser()._id
+  const resp = await fetch(API_URL+"/carts/"+userID, {
+    headers: {
+      "x-access-token": getAccessToken(),
+    }
+  })
+  return await resp.json()
+}
+
+async function addProductToCart(productID, quantity) {
+  const userID = getUser()._id
+  const resp = await fetch(API_URL+"/carts/"+userID, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": getAccessToken(),
+    },
+    body: JSON.stringify({products: {productID, quantity}}),
+  })
+  return await resp.json()
+}
+
 async function fetchUserDetails() {
   const resp =  await fetch(API_URL+"/users/me", {
     headers: {
@@ -92,4 +115,6 @@ export default {
   fetchProducts,
   fetchProduct,
   createUserCart,
+  getUserCart,
+  addProductToCart,
 }
