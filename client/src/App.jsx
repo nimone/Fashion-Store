@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useReducer, useState } from 'react'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import ScrollToTop from "@/ScrollToTop"
 
@@ -15,11 +15,14 @@ import OrdersPage from "@/pages/OrdersPage"
 import OrderDetailsPage from "@/pages/OrderDetailsPage"
 import AccountPage from "@/pages/AccountPage"
 import api from '@/api'
+import cartReducer, { initialCartState } from '@/reducers/cartReducer'
 
 export const UserContext = createContext()
+export const CartContext = createContext()
 
 export default function App() {
   const [user, setUser] = useState(null)
+  const [cart, cartDispatch] = useReducer(cartReducer, initialCartState)
   
   useEffect(() => {
     (async () => {
@@ -31,8 +34,20 @@ export default function App() {
     })()
   }, [])
 
+  useEffect(() => {
+    if (!user) return
+    (async () => {
+      const resp = await api.getUserCart()
+      console.log(resp)
+      if (resp.products) {
+        cartDispatch({type: "SET_PRODUCTS", payload: resp.products})
+      }
+    })()
+  }, [user])
+
   return (
     <Router>      
+      <CartContext.Provider value={{cart, cartDispatch}}>
       <UserContext.Provider value={{user, setUser}}>
         <Navbar />
         <ScrollToTop>
@@ -73,6 +88,7 @@ export default function App() {
 
         <Footer />
       </UserContext.Provider>
+      </CartContext.Provider>
     </Router>
   );
 }
