@@ -5,7 +5,7 @@ import clsx from "clsx"
 
 import Card from "./Card"
 
-export default function Product({ link, imgSrc, price }) {
+export default function Product({ link, imgSrc, price, onAddToCart }) {
 	return (
 		<Card 
 			imgSrc={imgSrc} 
@@ -20,7 +20,7 @@ export default function Product({ link, imgSrc, price }) {
       	"opacity-0 transition ease-out",
       	"group-hover:(opacity-100 bg-black/20)"
     	)}>
-    		<ProductButton>
+    		<ProductButton onClick={onAddToCart}>
     			<ShoppingCart />
     		</ProductButton>
     		<Link to={link}>
@@ -40,9 +40,9 @@ export default function Product({ link, imgSrc, price }) {
 	)
 }
 
-function ProductButton({ children }) {
+function ProductButton({ children, ...props }) {
 	return (
-		<button className="m-6 bg-white w-12 h-12 flex justify-center items-center rounded-full transition-all duration-300 ease-out hover:(w-24)">
+		<button className="m-6 bg-white w-12 h-12 flex justify-center items-center rounded-full transition-all duration-300 ease-out hover:(w-24)" {...props}>
 			{children}
 		</button>
 	)

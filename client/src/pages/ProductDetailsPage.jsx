@@ -21,6 +21,11 @@ export default function ProductDetailsPage() {
 		})()
 	}, [id])
 
+  const addToCart = async () => {
+    const resp = await api.addProductsToCart([{productID: id, quantity: 1}])
+    console.log(resp)
+  }
+
 	if (!product) return <Loader /> 
 
 	return (
@@ -36,7 +41,7 @@ export default function ProductDetailsPage() {
 					<h2 className="text-4xl text-gray-800">{product.name}</h2>
 					<p className="text-xl">{product.description}</p>
 					<span className="text-2xl font-medium">${product.price}</span>
-					<Button className="sm:max-w-xs text-base">Add to Cart</Button>
+					<Button className="sm:max-w-xs text-base" onClick={addToCart}>Add to Cart</Button>
 				</section>
 			</div>
 			<Button 

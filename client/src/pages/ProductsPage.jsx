@@ -34,6 +34,11 @@ export default function ProductsPage() {
     })()
   }, [category])
 
+  const addToCart = async (productID) => {
+    const resp = await api.addProductsToCart([{productID, quantity: 1}])
+    console.log(resp)
+  }
+
   return (
     <main>
       <Container
@@ -63,7 +68,7 @@ export default function ProductsPage() {
             )}
           </div>
         </section>
-        <ProductList products={products} />
+        <ProductList products={products} onAddToCart={addToCart} />
       </Container>
     </main>
   )
