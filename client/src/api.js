@@ -64,7 +64,19 @@ async function getUserCart() {
       "x-access-token": getAccessToken(),
     }
   })
-  return await resp.json()
+  const cart = await resp.json()
+  if (cart.products) {
+    cart.products = cart.products.map(product => (
+      {
+        id: product.productID._id,
+        title: product.productID.title,
+        price: product.productID.price,
+        image: product.productID.image,
+        quantity: product.quantity,
+      }
+    ))
+  }
+  return cart
 }
 
 async function addProductsToCart(products) {
