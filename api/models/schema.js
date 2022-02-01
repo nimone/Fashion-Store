@@ -96,5 +96,9 @@ module.exports = {
 				}).required(),
 			).single(),
 		}),
+		patch: Joi.object().keys({
+			productID: Joi.string().length(ID_LENGTH).alphanum().required(),
+			quantity: Joi.number().integer().min(0),
+		}),
 	},
 }

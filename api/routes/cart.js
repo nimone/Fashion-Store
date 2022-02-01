@@ -47,10 +47,12 @@ router.post("/",
 router.get("/:id", verifyAuthorization, async (req, res) => {
 	try {
 		let cart = await Cart.findOne({ userID: ObjectId(req.params.id) })
-		cart = await cart.populate({
-			path: 'products.productID',
-			select: ['title','price']
-		})
+		if (cart) {
+			cart = await cart.populate({
+				path: 'products.productID',
+				select: ['title','price']
+			})
+		}
 		return res.json(cart)
 
 	} catch (err) {
@@ -80,6 +82,33 @@ router.put("/:id",
 	}
 })
 
+// Patch a cart (mostly to update a product qty or to remove a product) - authorized user & admin only
+router.patch("/:id",
+	verifyAuthorization,
+	celebrate({ body: cartSchema.patch }),
+	async (req, res) => {
+	const { productID, quantity } = req.body
+
+	try {
+		if (quantity === 0) {
+			await Cart.updateOne(
+				{userID: ObjectId(req.params.id)},
+				{'$pull': {products: {productID: ObjectId(productID)}}}
+			)
+		} else {
+			await Cart.updateOne(
+				{userID: ObjectId(req.params.id), 'products.productID': ObjectId(productID)},
+				{'$set': {'products.$.quantity': quantity}}
+			)
+		}
+		return res.json(cartResponse.cartPatched)
+
+	} catch (err) {
+		console.error(err)
+		return res.status(500).json(cartResponse.unexpectedError)
+	}
+})
+
 // Delete a cart - authorized user & admin only
 router.delete("/:id", verifyAuthorization, async (req, res) => {
 	try {
@@ -100,6 +129,10 @@ const cartResponse = {
 	cartUpdated: { 
 		status: "ok",
 		message: "cart has been updated",
+	},
+	cartPatched: {
+		status: "ok",
+		message: "cart has been patched",
 	},
 	cartDeleted: { 
 		status: "ok",

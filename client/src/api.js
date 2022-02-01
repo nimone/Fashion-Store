@@ -67,7 +67,7 @@ async function getUserCart() {
   return await resp.json()
 }
 
-async function addProductToCart(productID, quantity) {
+async function addProductsToCart(products) {
   const userID = getUser()._id
   const resp = await fetch(API_URL+"/carts/"+userID, {
     method: "PUT",
@@ -75,7 +75,24 @@ async function addProductToCart(productID, quantity) {
       "Content-Type": "application/json",
       "x-access-token": getAccessToken(),
     },
-    body: JSON.stringify({products: {productID, quantity}}),
+    body: JSON.stringify({products}),
+  })
+  return await resp.json()
+}
+
+async function removeProductFromCart(productID) {
+  return await patchCart(productID, 0)
+}
+
+async function patchCart(productID, quantity) {
+  const userID = getUser()._id
+  const resp = await fetch(API_URL+"/carts/"+userID, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": getAccessToken(),
+    },
+    body: JSON.stringify({productID, quantity}),
   })
   return await resp.json()
 }
@@ -116,5 +133,7 @@ export default {
   fetchProduct,
   createUserCart,
   getUserCart,
-  addProductToCart,
+  addProductsToCart,
+  removeProductFromCart,
+  patchCart,
 }
