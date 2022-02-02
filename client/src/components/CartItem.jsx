@@ -31,13 +31,13 @@ export default function CartItem({ imgSrc, name, price, quantity, setQuantity })
 							<span className="text-2xl font-light">${quantity * price}</span>
 						</div>
 						<div className="flex items-center space-x-2 border border-gray-300 rounded-lg p-1">
-							<Plus onClick={() => setQuantity(quantity + 1)} />
-							<span className="text-xl px-1">{quantity}</span>
 							{quantity > 1 ? (
-								<Minus onClick={() => setQuantity(quantity - 1)} />
+								<Minus className="cursor-pointer" onClick={() => setQuantity(quantity - 1)} />
 							) : (
-								<Trash onClick={() => setQuantity(quantity - 1)} />
+								<Trash className="cursor-pointer" onClick={() => setQuantity(quantity - 1)} />
 							)}
+							<span className="text-xl px-1">{quantity}</span>
+							<Plus className="cursor-pointer" onClick={() => setQuantity(quantity + 1)} />
 						</div>
 					</div>
 				</div>

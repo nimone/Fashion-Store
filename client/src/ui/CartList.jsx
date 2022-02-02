@@ -9,7 +9,7 @@ export default function CartList({ items, setItemQuantity }) {
 				<CartItem 
 					key={item.id}
 					imgSrc={item.image} 
-					name={item.name} 
+					name={item.title} 
 					price={item.price} 
 					quantity={item.quantity}
 					setQuantity={qty => setItemQuantity(item.id, qty)}
