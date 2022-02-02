@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { ChevronDown } from "react-feather"
 import { useLocation } from "react-router-dom"
 
@@ -8,6 +8,7 @@ import Button from "@/components/Button"
 import DropDown, { Select, Option } from "@/components/DropDown"
 import useClickOutside from "@/hooks/useClickOutside" 
 import api from "../api"
+import { CartContext } from "@/App"
 
 const sortOptions = [
   "popular",
@@ -17,6 +18,7 @@ const sortOptions = [
 ]
 
 export default function ProductsPage() {
+  const {cartDispatch} = useContext(CartContext)
   const query = new URLSearchParams(useLocation().search)
   const [products, setProducts] = useState([])
   const [sort, setSort] = useState(0)
@@ -34,9 +36,11 @@ export default function ProductsPage() {
     })()
   }, [category])
 
-  const addToCart = async (productID) => {
-    const resp = await api.addProductsToCart([{productID, quantity: 1}])
-    console.log(resp)
+  const addToCart = async (product, quantity=1) => {
+    const resp = await api.addProductsToCart([{productID: product._id, quantity}])
+    if (resp.status === "ok") {
+      cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
+    }
   }
 
   return (

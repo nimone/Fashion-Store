@@ -11,7 +11,7 @@ export default function ProductList({ products, onAddToCart }) {
 					imgSrc={product.image}
 					price={product.price}
 					link={`/products/${product._id}`}
-					onAddToCart={() => onAddToCart(product._id)}
+					onAddToCart={() => onAddToCart(product)}
 				/>					
 			))}
 		</div>

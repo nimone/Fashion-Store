@@ -21,9 +21,11 @@ export default function ProductDetailsPage() {
 		})()
 	}, [id])
 
-  const addToCart = async () => {
-    const resp = await api.addProductsToCart([{productID: id, quantity: 1}])
-    console.log(resp)
+  const addToCart = async (quantity=1) => {
+    const resp = await api.addProductsToCart([{productID: product._id, quantity}])
+    if (resp.status === "ok") {
+      cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
+    }
   }
 
 	if (!product) return <Loader /> 

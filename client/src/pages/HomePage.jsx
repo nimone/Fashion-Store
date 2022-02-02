@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
 import { ChevronRight } from "react-feather"
 import { categories, sliderItems } from '@/dummydata'
@@ -10,8 +10,10 @@ import ProductList from "@/ui/ProductList"
 import Newsletter from "@/ui/Newsletter"
 import Slider from "@/ui/Slider"
 import api from '../api'
+import { CartContext } from "@/App"
 
 export default function HomePage() {
+	const {cartDispatch} = useContext(CartContext)
 	const [products, setProducts] = useState([])
 
 	useEffect(() => {
@@ -23,6 +25,13 @@ export default function HomePage() {
 			}
 		})()
 	}, [])
+
+  const addToCart = async (product, quantity=1) => {
+    const resp = await api.addProductsToCart([{productID: product._id, quantity}])
+    if (resp.status === "ok") {
+      cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
+    }
+	}
 	
 	return (
 		<main>
@@ -35,7 +44,7 @@ export default function HomePage() {
 			</Container>
 
 			<Container heading="Latest Arrivals">
-				<ProductList products={[...products].splice(0,4)} />
+				<ProductList products={[...products].splice(0,4)} onAddToCart={addToCart} />
 
 				<Link to="/products" className="flex justify-center">
 					<Button className="text-lg mt-6" link>

@@ -21,11 +21,21 @@ export default function cartReducer(state, action) {
         products: action.payload,
         total: cartTotal,
       }
-    case "ADD_PRODUCT":
+    case "ADD_PRODUCTS":
+      console.log(action.payload)
       return {
-        ...state, 
-        products: [...state.products, action.payload],
-        total: cartTotal + action.payload.price
+        ...state,
+        products: [
+          ...state.products, 
+          ...action.payload.map(product => ({
+            id: product._id,         
+            title: product.title,
+            price: product.price,
+            image: product.image,
+            quantity: product.quantity,
+          })),
+        ],
+        total: cartTotal + action.payload.reduce((sum, p) => sum+p.price,0)
       }
     case "REMOVE_PRODUCT":
       let removedProduct
