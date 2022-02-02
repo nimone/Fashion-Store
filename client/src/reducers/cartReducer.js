@@ -7,6 +7,11 @@ export default function cartReducer(state, action) {
   let cartTotal = state.total
 
   switch(action.type) {
+    case"RESET":
+      return {
+        products: [],
+        total: 0,
+      }
     case "SET_PRODUCTS":
       for (let product of action.payload) {
         cartTotal += product.quantity * product.price

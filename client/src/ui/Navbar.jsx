@@ -3,7 +3,7 @@ import clsx from "clsx"
 import { Link } from "react-router-dom"
 import { Menu, Search, User, LogIn, X, ShoppingCart } from "react-feather"
 
-import { UserContext } from '@/App'
+import { UserContext, CartContext } from '@/App'
 import Button from "@/components/Button"
 import Input from "@/components/Input"
 import UserDropDown from '@/components/UserDropDown'
@@ -12,6 +12,7 @@ import useClickOutside from '@/hooks/useClickOutside'
 
 export default function Navbar() {
 	const {user, setUser} = useContext(UserContext)
+	const {cartDispatch} = useContext(CartContext)
 	const [showMenu, setShowMenu] = useState(false)
 	const navbarRef = useClickOutside(() => setShowMenu(false))
 
@@ -39,6 +40,7 @@ export default function Navbar() {
 						onLogout={() => {
 							api.logoutUser()
 							setUser(null)
+							cartDispatch({type: "RESET"})
 						}} 
 					/>
 				}

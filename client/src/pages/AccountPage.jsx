@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom"
 import clsx from "clsx"
 import { Edit2, User, Mail, Lock, ChevronRight, Package, ShoppingCart, LogOut } from "react-feather"
 
-import { UserContext } from '@/App'
+import { UserContext, CartContext } from '@/App'
 import Container from "@/components/Container"
 import Input from "@/components/Input"
 import Button from "@/components/Button"
@@ -13,6 +13,7 @@ import api from '@/api'
 export default function AccountPage() {
 	const history = useHistory()
 	const {user, setUser} = useContext(UserContext)
+	const {cartDispatch} = useContext(CartContext)
 	const [showEditForm, setShowEditForm] = useState(false)
 
 	const handleEdit = e => {
@@ -78,6 +79,7 @@ export default function AccountPage() {
 						<AccountLink to="/" onClick={() => {
 							api.logoutUser()
 							setUser(null)
+							cartDispatch({type: "RESET"})
 						}}>
 							<LogOut className="mr-2" />Log out from this Account
 						</AccountLink>
