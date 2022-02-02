@@ -12,7 +12,7 @@ import useClickOutside from '@/hooks/useClickOutside'
 
 export default function Navbar() {
 	const {user, setUser} = useContext(UserContext)
-	const {cartDispatch} = useContext(CartContext)
+	const {cart, cartDispatch} = useContext(CartContext)
 	const [showMenu, setShowMenu] = useState(false)
 	const navbarRef = useClickOutside(() => setShowMenu(false))
 
@@ -31,8 +31,14 @@ export default function Navbar() {
 			</div>
 
 			<div className="flex items-center ml-2 space-x-4 md:order-2">
-				<Link to="/cart" className="flex items-center">
+				<Link to="/cart" className="relative flex items-center pr-2">
 					<ShoppingCart width={24} height={24} />
+					{cart.products.length ?
+						<div className='absolute flex justify-center items-center w-4 h-4 bg-red-500 text-white rounded-full top-0 right-0 text-xs'>
+							{cart.products.length}
+						</div>
+						: null
+					}
 				</Link>
 				{user && 
 					<UserDropDown 
