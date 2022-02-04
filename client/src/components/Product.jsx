@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from "react-router-dom"
-import { ShoppingCart, Search } from "react-feather"
+import { ShoppingCart, Search, Check } from "react-feather"
 import clsx from "clsx"
 
 import Card from "./Card"
 
-export default function Product({ link, imgSrc, price, onAddToCart }) {
+export default function Product({ link, imgSrc, price, onAddToCart, isInCart }) {
 	return (
 		<Card 
 			imgSrc={imgSrc} 
@@ -20,12 +20,20 @@ export default function Product({ link, imgSrc, price, onAddToCart }) {
       	"opacity-0 transition ease-out",
       	"group-hover:(opacity-100 bg-black/20)"
     	)}>
-    		<ProductButton onClick={onAddToCart}>
-    			<ShoppingCart />
-    		</ProductButton>
+    			{isInCart ? (
+						<Link to="/cart">
+							<ProductButton className="!bg-green-500 text-white">
+								<Check className='min-w-8' />
+							</ProductButton>
+						</Link>
+					):( 
+						<ProductButton onClick={onAddToCart}>
+							<ShoppingCart className='min-w-8' />
+						</ProductButton>
+					)}
     		<Link to={link}>
 	    		<ProductButton>
-	    			<Search />
+	    			<Search className='min-w-8' />
 	    		</ProductButton>
     		</Link>
       </div>
@@ -40,9 +48,9 @@ export default function Product({ link, imgSrc, price, onAddToCart }) {
 	)
 }
 
-function ProductButton({ children, ...props }) {
+function ProductButton({ children, className, ...props }) {
 	return (
-		<button className="m-6 bg-white w-12 h-12 flex justify-center items-center rounded-full transition-all duration-300 ease-out hover:(w-24)" {...props}>
+		<button className={`m-6 bg-white w-12 h-12 flex justify-center items-center rounded-full transition-all duration-300 ease-out hover:(px-14) focus:outline-none ${className}`} {...props}>
 			{children}
 		</button>
 	)

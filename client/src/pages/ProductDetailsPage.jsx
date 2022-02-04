@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useParams, Redirect, useHistory } from "react-router-dom"
-import { ChevronLeft } from "react-feather"
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useParams, useHistory } from "react-router-dom"
+import { Check, ChevronLeft, ShoppingCart } from "react-feather"
 
 import Button from "@/components/Button"
 import Loader from "@/components/Loader"
 import api from '../api'
+import { CartContext } from '@/App'
 
 export default function ProductDetailsPage() {
+	const {cart, cartDispatch} = useContext(CartContext)
 	const history = useHistory()
 	const { id } = useParams()
 	const [product, setProduct] = useState(null)
@@ -21,8 +23,8 @@ export default function ProductDetailsPage() {
 		})()
 	}, [id])
 
-  const addToCart = async (quantity=1) => {
-    const resp = await api.addProductsToCart([{productID: product._id, quantity}])
+  const addToCart = async (e, quantity=1) => {
+    const resp = await api.addProductsToCart([{productID: id, quantity}])
     if (resp.status === "ok") {
       cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
     }
@@ -43,7 +45,19 @@ export default function ProductDetailsPage() {
 					<h2 className="text-4xl text-gray-800">{product.name}</h2>
 					<p className="text-xl">{product.description}</p>
 					<span className="text-2xl font-medium">${product.price}</span>
-					<Button className="sm:max-w-xs text-base" onClick={addToCart}>Add to Cart</Button>
+					{cart.products.some(p => p.id === id) ? (
+						<Link to="/cart">
+							<Button link className="sm:max-w-xs text-base">
+								<Check className="mr-2" />
+								<span>Added to Cart</span>
+							</Button>
+						</Link>
+					) : (
+						<Button className="sm:max-w-xs text-base" onClick={addToCart}>
+							<ShoppingCart className="opacity-80 mr-4" />
+							<span>Add to Cart</span>
+						</Button>
+					)}
 				</section>
 			</div>
 			<Button 
