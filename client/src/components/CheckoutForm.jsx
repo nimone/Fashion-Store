@@ -4,41 +4,44 @@ import {
   useStripe,
   useElements
 } from "@stripe/react-stripe-js"
+import api from '../api'
+import Button from './Button'
+import Loader from "./Loader"
+import { CheckCircle, CreditCard, X } from 'react-feather'
 
-export default function CheckoutForm() {
+export default function CheckoutForm({onCancel,onSuccess}) {
   const [succeeded, setSucceeded] = useState(false)
   const [error, setError] = useState(null)
   const [processing, setProcessing] = useState('')
   const [disabled, setDisabled] = useState(true)
   const [clientSecret, setClientSecret] = useState('')
+  const [orderDetails, setOrderDetails] = useState({})
   const stripe = useStripe()
   const elements = useElements()
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("http://localhost:5000/checkout/payment", {
-      // method: "POST",
-      headers: {
-        // "Content-Type": "application/json",
-        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MTZhZDY5Nzg5YTQ3NDMxMDRjZGQ2MzciLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjM0MzkxNzEyLCJleHAiOjE2MzQ2NTA5MTJ9.MRatnztCi5JofJ6kNdIMvMI2hKj85NpOtauxM6hlIjg",
-      },
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-      setClientSecret(data.clientSecret)
-    })
+    (async () => {
+      const resp = await api.proceedCheckout()
+      console.log(resp)
+      if (resp.status !== "error") {
+        setClientSecret(resp.clientSecret)
+        setOrderDetails(resp.finalOrder)
+      }
+    })()
   }, [])
 
   const cardStyle = {
     style: {
       base: {
-        color: "#32325d",
-        fontFamily: 'Arial, sans-serif',
         fontSmoothing: "antialiased",
         fontSize: "16px",
+        color: "#27272a",
         "::placeholder": {
-          color: "#32325d"
+          color: "gray"
+        },
+        "::-ms-clear": {
+          border: "2px solid gray"
         }
       },
       invalid: {
@@ -68,34 +71,80 @@ export default function CheckoutForm() {
       setError(null)
       setProcessing(false)
       setSucceeded(true)
+      onSuccess()
     }
   }
+
+  if (succeeded) {
+    return (
+      <div className='flex flex-col items-center'>
+        <CheckCircle className='w-20 h-20 text-green-400' />
+        <p className='text-lg font-light my-4'>Order Placed Successfully</p>
+        {/* TODO: go to orders page link here */}
+				<Button secondary onClick={onCancel}>Close</Button>
+      </div>
+    )
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement options={cardStyle} onChange={handleChange} />
-      <button disabled={processing || disabled || succeeded}>
-        <span id="button-text">
-          {processing ? "processing..." : "Pay now"}
-        </span>
-      </button>
-      {/* Show any error that happens when processing the payment */}
-      {error && (
-        <div className="card-error" role="alert">
-          {error}
-        </div>
-      )}
-      {/* Show a success message upon completion */}
-      {succeeded && (
-        <p>
-          Payment succeeded, see the result in your
-          <a
-            href={`https://dashboard.stripe.com/test/payments`}
-          >
-            {" "}
-            Stripe dashboard.
-          </a> Refresh the page to pay again.
-        </p>
-      )}
-    </form>
+    <div>
+      <section className='mb-6'>
+        {orderDetails?.amount && 
+          <div className='flex justify-between text-lg mt-2'>
+            <h4 className='text-lg mb-2'>Final Order</h4>
+            <span className='font-bold text-xl'>${orderDetails.amount}</span>
+          </div>
+        }
+        {orderDetails?.products?.length ?
+          <ul>
+            {orderDetails.products.map(product => (
+              <CheckoutItem 
+                title={product.productID.title} 
+                price={product.productID.price} 
+                quantity={product.quantity} 
+                />
+              ))}
+          </ul>
+          : <Loader color="bg-gray-600" />
+        }
+
+      </section>
+      <form onSubmit={handleSubmit}>
+        <CardElement options={cardStyle} onChange={handleChange} />
+        {/* Show any error that happens when processing the payment */}
+        {error && (
+          <div className="text-red-400 mt-2" role="alert">
+            {error}
+          </div>
+        )}
+        <Button className="w-full mt-6" disabled={processing || disabled || succeeded}>
+          {processing 
+            ? <Loader/>
+            : <>
+              <CreditCard className='mr-2 opacity-70' /> 
+              <span>Make Payment</span>
+            </>
+          }
+        </Button>
+				<Button className="w-full" secondary onClick={onCancel}>Cancel</Button>
+      </form>
+    </div>
   );
+}
+
+function CheckoutItem({title, price, quantity}) {
+  return (
+    <li className='flex justify-between'>
+      <p>{title}</p>
+      <div className='flex justify-between items-center'>
+        {quantity > 1 &&
+          <span className='inline-flex items-center text-gray-400 mr-5'>
+            <X className='' />
+            {quantity}
+          </span>
+        }
+        <span className='text-lg font-light'>${quantity*price}</span>
+      </div>
+    </li>
+  )
 }

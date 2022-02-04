@@ -135,6 +135,16 @@ async function fetchProduct(id) {
   return await resp.json()
 }
 
+async function proceedCheckout() {
+  const resp = await fetch(API_URL+"/checkout/payment", {
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": getAccessToken(),
+    },
+  })
+  return await resp.json()
+}
+
 export default {
   registerUser,
   loginUser,
@@ -148,4 +158,5 @@ export default {
   addProductsToCart,
   removeProductFromCart,
   patchCart,
+  proceedCheckout,
 }

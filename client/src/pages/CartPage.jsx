@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from "react-router-dom"
 import { ShoppingBag } from "react-feather"
 
@@ -8,8 +8,10 @@ import CartSummary from "@/ui/CartSummary"
 import Button from "@/components/Button"
 import PageHeader from "@/components/PageHeader"
 import api from "@/api"
+import CheckoutModal from '../components/Checkout'
 
 export default function CartPage() {
+	const [showCheckoutModal, setShowCheckoutModal] = useState(false)
 	const {cart, cartDispatch} = useContext(CartContext)
 
 	const setProductQuantity = async (id, quantity) => {
@@ -49,6 +51,7 @@ export default function CartPage() {
 
 				<section className="w-full md:w-auto border border-gray-300 rounded shadow py-4 md:(sticky top-20)">
 					<CartSummary 
+						onCheckout={() => setShowCheckoutModal(true)}
 						subtotal={cart.total} 
 						charges={[
 							{name: "Shipping Charges", amount: 9},
@@ -59,6 +62,17 @@ export default function CartPage() {
 					/>
 				</section>
 			</section>
+
+			{showCheckoutModal && 
+				<CheckoutModal 
+					onCancel={() => setShowCheckoutModal(false)} 
+					onSuccess={() => {
+						// create order 
+							// on production create the order using stripe webhooks
+						// empty the cart 
+					}}
+				/>
+			}
 		</main>
 	)
 }

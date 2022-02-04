@@ -3,7 +3,7 @@ import React from 'react'
 import Input from "@/components/Input"
 import Button from "@/components/Button"
 
-export default function OrderSummary({ subtotal, charges, discounts }) {
+export default function CartSummary({ subtotal, charges, discounts, onCheckout }) {
 	const chargesTotal = charges.reduce((sum, c) => sum + c.amount, 0)
 	const discountTotal = discounts.reduce((sum, d) => sum + d.amount, 0)
 
@@ -36,7 +36,7 @@ export default function OrderSummary({ subtotal, charges, discounts }) {
 				<Input placeholder="Coupon Code" className="!min-w-20" />
 				<Button secondary disabled>Apply</Button>
 			</div>
-			<Button className="w-full self-center">Checkout Now</Button>
+			<Button className="w-full self-center" onClick={onCheckout}>Checkout Now</Button>
 		</div>
 	)
 }

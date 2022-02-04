@@ -1,17 +1,19 @@
 import React from 'react'
 
-function Loader() {
+function Loader({ color }) {
+	const loaderClass = `p-2 w-4 h-4 rounded-full animate-bounce ${color || "bg-white/20"}`
+
 	return (
 		<div className="flex space-x-2 p-1 justify-center items-center">
 			<div 
 				style={{animationDelay: "0.1s"}}
-				className="bg-white/20 p-2 w-4 h-4 rounded-full animate-bounce"></div>
+				className={loaderClass}></div>
 			<div 
 				style={{animationDelay: "0.2s"}}
-				className="bg-white/20 p-2 w-4 h-4 rounded-full animate-bounce"></div>
+				className={loaderClass}></div>
 			<div 
 				style={{animationDelay: "0.3s"}}
-				className="bg-white/20 p-2 w-4 h-4 rounded-full animate-bounce"></div>
+				className={loaderClass}></div>
 		</div>
 	)
 }
