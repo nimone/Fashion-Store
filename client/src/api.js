@@ -109,6 +109,16 @@ async function patchCart(productID, quantity) {
   return await resp.json()
 }
 
+async function clearCart() {
+  const resp = await fetch(API_URL+"/carts/clear", {
+    method: "POST",
+    headers: {
+      "x-access-token": getAccessToken(),
+    },
+  })
+  return await resp.json()
+}
+
 async function fetchUserDetails() {
   const resp =  await fetch(API_URL+"/users/me", {
     headers: {
@@ -145,6 +155,23 @@ async function proceedCheckout() {
   return await resp.json()
 }
 
+// on production create the order using stripe webhooks
+async function createOrder(products, amount, address) {
+  const resp = await fetch(API_URL+"/orders", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": getAccessToken(),
+    },
+    body: JSON.stringify({ 
+      products: products.map(p => ({productID: p.id, quantity: p.quantity})), 
+      amount, 
+      address 
+    }),
+  })
+  return await resp.json()
+}
+
 export default {
   registerUser,
   loginUser,
@@ -158,5 +185,7 @@ export default {
   addProductsToCart,
   removeProductFromCart,
   patchCart,
+  clearCart,
   proceedCheckout,
+  createOrder,
 }

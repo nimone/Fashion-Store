@@ -43,6 +43,21 @@ router.post("/",
 	}
 })
 
+// Reset a cart - any authenticated user
+router.post("/clear", verifyToken, async (req, res) => {
+	try {
+		await Cart.updateOne(
+			{userID: ObjectId(req.user.uid)},
+			{$set: {products: []}},
+		)
+		return res.json(cartResponse.cartCleared)
+
+	} catch (err) {
+		console.log(err)
+		return res.status(500).json(cartResponse.unexpectedError)
+	}
+})
+
 // Get a cart - authorized user & admin only
 router.get("/:id", verifyAuthorization, async (req, res) => {
 	try {
@@ -125,6 +140,10 @@ const cartResponse = {
 	cartCreated: { 
 		status: "ok",
 		message: "cart has been created",
+	},	
+	cartCleared: { 
+		status: "ok",
+		message: "cart has been cleared",
 	},	
 	cartUpdated: { 
 		status: "ok",

@@ -24,6 +24,15 @@ export default function CartPage() {
 		}
 	}
 
+	const handleCreateOrder = async () => {
+		const resp = await api.createOrder(cart.products, cart.total, "abc street, abc city, abc state, abc zip")
+		if (resp.status === "ok") {
+			console.log(resp.orderID)
+			api.clearCart()
+			// cartDispatch({type: "CLEAR_CART"})
+		}
+	}
+
 	if (cart.products.length === 0) {
 		return (
 			<main className="h-screen flex flex-col items-center text-center my-14 p-4">
@@ -66,11 +75,7 @@ export default function CartPage() {
 			{showCheckoutModal && 
 				<CheckoutModal 
 					onCancel={() => setShowCheckoutModal(false)} 
-					onSuccess={() => {
-						// create order 
-							// on production create the order using stripe webhooks
-						// empty the cart 
-					}}
+					onSuccess={handleCreateOrder}
 				/>
 			}
 		</main>

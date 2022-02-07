@@ -66,6 +66,11 @@ export default function cartReducer(state, action) {
         products: newProducts,
         total: cartTotal + (action.payload.quantity - prevQuantity) * newProducts[productIdx].price,
       }
+    case "CLEAR_CART":
+      return {
+        products: [],
+        total: 0,
+      }
     default:
       return state
   }
