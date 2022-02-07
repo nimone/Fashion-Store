@@ -7,7 +7,8 @@ import {
 import api from '../api'
 import Button from './Button'
 import Loader from "./Loader"
-import { CheckCircle, CreditCard, X } from 'react-feather'
+import { CheckCircle, ChevronRight, CreditCard, X } from 'react-feather'
+import { Link } from 'react-router-dom'
 
 export default function CheckoutForm({onCancel,onSuccess}) {
   const [succeeded, setSucceeded] = useState(false)
@@ -80,7 +81,12 @@ export default function CheckoutForm({onCancel,onSuccess}) {
       <div className='flex flex-col items-center'>
         <CheckCircle className='w-20 h-20 text-green-400' />
         <p className='text-lg font-light my-4'>Order Placed Successfully</p>
-        {/* TODO: go to orders page link here */}
+        <Link to="/orders">
+          <Button link>
+            <span>Go to Orders</span>
+            <ChevronRight className='ml-2' />
+          </Button>
+        </Link>
 				<Button secondary onClick={onCancel}>Close</Button>
       </div>
     )
@@ -99,11 +105,12 @@ export default function CheckoutForm({onCancel,onSuccess}) {
           <ul>
             {orderDetails.products.map(product => (
               <CheckoutItem 
+                key={product.productID._id}
                 title={product.productID.title} 
                 price={product.productID.price} 
                 quantity={product.quantity} 
-                />
-              ))}
+              />
+            ))}
           </ul>
           : <Loader color="bg-gray-600" />
         }
