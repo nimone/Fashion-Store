@@ -36,6 +36,23 @@ export default function ProductsPage() {
     })()
   }, [category])
 
+  useEffect(() => sortProducts(sort), [sort])
+
+  const sortProducts = (sortType) => {
+    switch (sortType) {
+      case 1:
+        setProducts([...products].sort((a, b) => a.updatedAt - b.updatedAt))
+      case 2: 
+        setProducts([...products].sort((a, b) => a.price - b.price))
+        break
+      case 3:
+        setProducts([...products].sort((a, b) => b.price - a.price))
+        break
+      default:
+        return
+    }
+  }
+
   const addToCart = async (product, quantity=1) => {
     const resp = await api.addProductsToCart([{productID: product._id, quantity}])
     if (resp.status === "ok") {
@@ -46,12 +63,12 @@ export default function ProductsPage() {
   return (
     <main>
       <Container
-        heading={`Products${category ? ": " + category : ""}`}
+        heading={`Products${category ? " for: " + category : ""}`}
         type="page"
       >
         <section className="flex justify-end">
           <div className="relative" ref={dropDownRef}>
-            <span className="font-bold">Sort:</span>
+            <span className="font-bold">Sort by:</span>
             <Button
               secondary
               onClick={() => setShowSortOptions((prev) => !prev)}
