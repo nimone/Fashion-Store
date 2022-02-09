@@ -1,17 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ChevronLeft } from "react-feather"
-import { useParams, Redirect, useHistory } from "react-router-dom"
-import { dummyOrders } from '@/dummydata'
+import { useParams, useHistory, Link } from "react-router-dom"
 
 import Button from "@/components/Button"
 import Container from "@/components/Container"
 import OrderStatus from "@/components/OrderStatus"
 import OrderProduct from "@/components/OrderProduct"
+import Loader from "@/components/Loader"
+import api from '../api'
 
 export default function OrderDetailsPage() {
 	const history = useHistory()
 	const { id } = useParams()
-	const order = dummyOrders.find(order => order.id == id)
+	const [order, setOrder] = useState(null)
+
+	useEffect(() => {
+		(async () => {
+			const resp = await api.fetchOrderDetails(id)
+			if (resp.status !== "ok") {
+				history.replace("/404")
+			}
+			setOrder(resp.order)
+		})()
+	}, [id])
+
+	if (!order) {
+		return <main className='w-screen h-screen flex justify-center items-center'>
+			<Loader color="bg-gray-600" />
+		</main>
+	}
 
 	return (
 		<main className="relative mb-20">
@@ -36,13 +53,14 @@ export default function OrderDetailsPage() {
 				<OrderDetailsSection heading="Products:">
 					<div className="flex flex-wrap justify-center gap-2">
 						{order.products.map(p => (
-							<OrderProduct 
-								key={p.product.id}
-								name={p.product.name}
-								imgSrc={p.product.image}
-								price={p.product.price}
-								quantity={p.quantity}
-							/>
+							<Link key={p._id} to={`/products/${p.productID._id}`}>
+								<OrderProduct 
+									name={p.productID.title}
+									imgSrc={p.productID.image}
+									price={p.productID.price}
+									quantity={p.quantity}
+								/>
+							</Link>
 						))}
 					</div>
 					<div className="text-center space-y-2">

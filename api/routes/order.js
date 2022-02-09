@@ -106,7 +106,11 @@ router.get("/:id", verifyToken, async (req, res) => {
 		if (!order) {
 			return res.status(404).json(orderResponse.orderNotFound)
 		} 
-		return res.json(order)
+		order = await order.populate({
+			path: "products.productID",
+			select: ["title", "price", "image"],
+		})
+		return res.json({status: "ok", order})
 
 	} catch (err) {
 		console.error(err)

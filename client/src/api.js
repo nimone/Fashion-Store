@@ -182,6 +182,15 @@ async function fetchAllOrders() {
   return await resp.json()
 }
 
+async function fetchOrderDetails(orderID) {
+  const resp = await fetch(API_URL+"/orders/"+orderID, {
+    headers: {
+      "x-access-token": getAccessToken(),
+    }
+  })
+  return await resp.json()
+}
+
 export default {
   registerUser,
   loginUser,
@@ -198,5 +207,6 @@ export default {
   clearCart,
   proceedCheckout,
   createOrder,
-  fetchAllOrders
+  fetchAllOrders,
+  fetchOrderDetails,
 }
