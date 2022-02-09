@@ -11,6 +11,7 @@ import Newsletter from "@/ui/Newsletter"
 import Slider from "@/ui/Slider"
 import api from '../api'
 import { CartContext } from "@/App"
+import Carousel from '../components/Carousel'
 
 export default function HomePage() {
 	const {cartDispatch} = useContext(CartContext)
@@ -36,7 +37,7 @@ export default function HomePage() {
 	return (
 		<main>
 			<section>
-				<Slider slides={sliderItems} />
+				<Carousel slides={sliderItems} />
 			</section>
 
 			<Container heading="Popular Categories">
