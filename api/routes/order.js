@@ -149,6 +149,10 @@ router.delete("/:id", verifyAdminAccess, async (req, res) => {
 router.get("/user/:id", verifyAuthorization, async (req, res) => {
 	try {
 		let orders = await Order.find({ userID: ObjectId(req.params.id) })
+			.populate({
+				path: 'products.productID',
+				select: ['title','image'],
+			})
 		return res.json(orders)
 
 	} catch (err) {

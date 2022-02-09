@@ -172,6 +172,16 @@ async function createOrder(products, amount, address) {
   return await resp.json()
 }
 
+async function fetchAllOrders() {
+  const userID = getUser()._id
+  const resp = await fetch(API_URL+"/orders/user/"+userID, {
+    headers: {
+      "x-access-token": getAccessToken(),
+    }
+  })
+  return await resp.json()
+}
+
 export default {
   registerUser,
   loginUser,
@@ -188,4 +198,5 @@ export default {
   clearCart,
   proceedCheckout,
   createOrder,
+  fetchAllOrders
 }

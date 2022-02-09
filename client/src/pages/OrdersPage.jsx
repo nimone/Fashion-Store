@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
 import { ShoppingBag } from "react-feather"
 import clsx from "clsx"
@@ -7,9 +7,20 @@ import { dummyOrders } from '@/dummydata'
 import OrderItem from "@/components/OrderItem"
 import PageHeader from "@/components/PageHeader"
 import Button from "@/components/Button"
+import api from '../api'
 
 export default function OrdersPage() {
-	const [orders, setOrders] = useState([...dummyOrders])
+	// const [orders, setOrders] = useState([...dummyOrders])
+	const [orders, setOrders] = useState([])
+
+	useEffect(() => {
+		(async () => {
+			const resp = await api.fetchAllOrders()
+			if (resp.length) {
+				setOrders(resp)
+			}
+		})()
+	}, [])
 
 	if (orders.length === 0) {
 		return (
@@ -36,8 +47,8 @@ export default function OrdersPage() {
 				"my-16 px-2 py-4 m-4",
 				"sm:mx-auto",
 			)}>
-				{orders.map((order, i) => (
-					<Link key={order.id} to={`/orders/${order.id}`}>
+				{orders.map(order => (
+					<Link key={order._id} to={`/orders/${order._id}`}>
 						<OrderItem
 							products={order.products}
 							status={order.status}
