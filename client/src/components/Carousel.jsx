@@ -17,10 +17,10 @@ export default function Carousel({slides}) {
 		setCurrentSlide(index)
 	}
 
-	useEffect(() => {
-		const autoSlide = setTimeout(nextSlide, 5000)
-		return () => clearTimeout(autoSlide)
-	}, [currentSlide])
+	// useEffect(() => {
+	// 	const autoSlide = setTimeout(nextSlide, 5000)
+	// 	return () => clearTimeout(autoSlide)
+	// }, [currentSlide])
 	
 	return (
 		<div className='relative'>
