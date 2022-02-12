@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 import ScrollToTop from "@/ScrollToTop"
 
@@ -16,13 +16,14 @@ import OrderDetailsPage from "@/pages/OrderDetailsPage"
 import AccountPage from "@/pages/AccountPage"
 import api from '@/api'
 import cartReducer, { initialCartState } from '@/reducers/cartReducer'
+import useReducerWithLocalStorage from '@/hooks/useReducerWithLocalStorage'
 
 export const UserContext = createContext()
 export const CartContext = createContext()
 
 export default function App() {
   const [user, setUser] = useState(null)
-  const [cart, cartDispatch] = useReducer(cartReducer, initialCartState)
+  const [cart, cartDispatch] = useReducerWithLocalStorage(cartReducer, initialCartState, "cart")
   
   useEffect(() => {
     (async () => {
