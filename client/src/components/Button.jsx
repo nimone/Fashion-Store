@@ -16,6 +16,7 @@ export default function Button({ className, children, link, secondary, light, ..
         link && "!text-blue-800 hover:!text-blue-900",
         (secondary || light) && "!text-gray-800",
         light && "!bg-white !hover:bg-gray-200",
+        props.disabled && "opacity-75 cursor-not-allowed",
         className
       )}
       {...props}

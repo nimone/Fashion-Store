@@ -8,7 +8,7 @@ import Button from "@/components/Button"
 import DropDown, { Select, Option } from "@/components/DropDown"
 import useClickOutside from "@/hooks/useClickOutside" 
 import api from "../api"
-import { CartContext } from "@/App"
+import { CartContext, UserContext } from "@/App"
 
 const sortOptions = [
   "popular",
@@ -19,6 +19,7 @@ const sortOptions = [
 
 export default function ProductsPage() {
   const {cartDispatch} = useContext(CartContext)
+  const {user} = useContext(UserContext)
   const query = new URLSearchParams(useLocation().search)
   const [products, setProducts] = useState([])
   const [sort, setSort] = useState(0)
@@ -54,8 +55,12 @@ export default function ProductsPage() {
   }
 
   const addToCart = async (product, quantity=1) => {
-    const resp = await api.addProductsToCart([{productID: product._id, quantity}])
-    if (resp.status === "ok") {
+    if (user) {
+      const resp = await api.addProductsToCart([{productID: product._id, quantity}])
+      if (resp.status === "ok") {
+        cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
+      }
+    } else {
       cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
     }
   }

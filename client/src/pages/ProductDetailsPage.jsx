@@ -5,9 +5,10 @@ import { Check, ChevronLeft, ShoppingCart } from "react-feather"
 import Button from "@/components/Button"
 import Loader from "@/components/Loader"
 import api from '../api'
-import { CartContext } from '@/App'
+import { CartContext, UserContext } from '@/App'
 
 export default function ProductDetailsPage() {
+	const {user} = useContext(UserContext)
 	const {cart, cartDispatch} = useContext(CartContext)
 	const history = useHistory()
 	const { id } = useParams()
@@ -24,10 +25,14 @@ export default function ProductDetailsPage() {
 	}, [id])
 
   const addToCart = async (e, quantity=1) => {
-    const resp = await api.addProductsToCart([{productID: id, quantity}])
-    if (resp.status === "ok") {
-      cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
-    }
+		if (user) {
+			const resp = await api.addProductsToCart([{productID: id, quantity}])
+			if (resp.status === "ok") {
+				cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
+			}
+    } else {
+			cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
+		}
   }
 
 	if (!product) return <Loader /> 

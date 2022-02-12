@@ -10,10 +10,11 @@ import ProductList from "@/ui/ProductList"
 import Newsletter from "@/ui/Newsletter"
 import Slider from "@/ui/Slider"
 import api from '../api'
-import { CartContext } from "@/App"
+import { CartContext, UserContext } from "@/App"
 import Carousel from '../components/Carousel'
 
 export default function HomePage() {
+	const {user} = useContext(UserContext)
 	const {cartDispatch} = useContext(CartContext)
 	const [products, setProducts] = useState([])
 
@@ -28,10 +29,14 @@ export default function HomePage() {
 	}, [])
 
   const addToCart = async (product, quantity=1) => {
-    const resp = await api.addProductsToCart([{productID: product._id, quantity}])
-    if (resp.status === "ok") {
-      cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
-    }
+		if (user) {
+			const resp = await api.addProductsToCart([{productID: product._id, quantity}])
+			if (resp.status === "ok") {
+				cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
+			}
+		} else {
+			cartDispatch({type: "ADD_PRODUCTS", payload: [{...product, quantity}]})
+		}
 	}
 	
 	return (

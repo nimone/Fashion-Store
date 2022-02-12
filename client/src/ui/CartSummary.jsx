@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
+import { UserContext } from "@/App"
 import Input from "@/components/Input"
 import Button from "@/components/Button"
+import { Link } from 'react-router-dom'
 
 export default function CartSummary({ subtotal, charges, discounts, onCheckout }) {
+	const {user} = useContext(UserContext)
 	const chargesTotal = charges.reduce((sum, c) => sum + c.amount, 0)
 	const discountTotal = discounts.reduce((sum, d) => sum + d.amount, 0)
 
@@ -36,7 +39,12 @@ export default function CartSummary({ subtotal, charges, discounts, onCheckout }
 				<Input placeholder="Coupon Code" className="!min-w-20" />
 				<Button secondary disabled>Apply</Button>
 			</div>
-			<Button className="w-full self-center" onClick={onCheckout}>Checkout Now</Button>
+			<Button className="w-full self-center" onClick={onCheckout} disabled={!user}>Checkout Now</Button>
+			{!user && 
+				<Link to="/register" className='text-sm text-gray-600 text-center'>
+					Please login or register to checkout
+				</Link>
+			}
 		</div>
 	)
 }
