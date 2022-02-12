@@ -2,25 +2,31 @@ import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { sliderItems } from '@/dummydata'
 
-import { UserContext } from '@/App'
+import { UserContext, CartContext } from '@/App'
 import RegisterForm from "@/ui/RegisterForm"
 import api from '@/api'
 
 export default function RegisterPage() {
 	const {setUser} = useContext(UserContext)
+	const {cart} = useContext(CartContext)
 	const history = useHistory()
 	
 	const handleRegister = async userData => {
-		console.log(userData)
 		const resp = await api.registerUser(userData)
-		console.log(resp)
 		if (resp.status == "ok") {
 			const loginResp = await api.loginUser(userData)
-			console.log(loginResp)
 			if (loginResp.status == "ok") {
 				setUser(api.getUser())
-				await api.createUserCart()
-				history.push("/account")
+				await api.createUserCart(cart.products.map(p => ({
+					productID: p.id, 
+					quantity: p.quantity
+				})))
+
+				if (cart.products.length) {
+					history.push("/cart")
+				} else {
+					history.push("/account")
+				}
 			}
 		}
 		return resp

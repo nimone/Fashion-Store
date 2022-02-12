@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Link } from "react-router-dom"
 import { ShoppingBag } from "react-feather"
 
-import { CartContext } from "@/App"
+import { CartContext, UserContext } from "@/App"
 import CartList from "@/ui/CartList"
 import CartSummary from "@/ui/CartSummary"
 import Button from "@/components/Button"
@@ -12,15 +12,16 @@ import CheckoutModal from '../components/Checkout'
 
 export default function CartPage() {
 	const [showCheckoutModal, setShowCheckoutModal] = useState(false)
+	const {user} = useContext(UserContext)
 	const {cart, cartDispatch} = useContext(CartContext)
 
 	const setProductQuantity = async (id, quantity) => {
 		if (quantity < 1) {
 			cartDispatch({type: "REMOVE_PRODUCT", payload: id})
-			api.removeProductFromCart(id)
+			if (user) api.removeProductFromCart(id)
 		} else {
 			cartDispatch({type: "SET_PRODUCT_QUANTITY", payload: {id, quantity}})
-			api.patchCart(id, quantity)
+			if(user) api.patchCart(id, quantity)
 		}
 	}
 

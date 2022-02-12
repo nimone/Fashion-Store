@@ -1,22 +1,31 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { sliderItems } from '@/dummydata'
 
-import { UserContext } from '@/App'
+import { UserContext, CartContext } from '@/App'
 import LoginForm from "@/ui/LoginForm"
 import api from '@/api'
 import { useHistory } from 'react-router-dom'
 
 export default function LoginPage() {
+	const {cart} = useContext(CartContext)
 	const {setUser} = useContext(UserContext)
 	const history = useHistory()
 
 	const handleLogin = async userData => {
-		console.log(userData)
 		const resp = await api.loginUser(userData)
-		console.log(resp)
 		if (resp.status == "ok") {
+			if (cart.products.length) {
+				await api.addProductsToCart(cart.products.map(p => ({
+					productID: p.id,
+					quantity: p.quantity
+				})))
+			}
 			setUser(api.getUser())
-			history.push("/account")
+			if (cart.products.length) {
+				history.push("/cart")
+			} else {
+				history.push("/account")
+			}
 		}
 		return resp
 	}

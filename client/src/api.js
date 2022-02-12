@@ -47,12 +47,14 @@ function logoutUser() {
   localStorage.clear()
 }
 
-async function createUserCart() {
+async function createUserCart(products) {
   const resp = await fetch(API_URL+"/carts", {
     method: "POST",
     headers: {
+      "Content-Type": "application/json",
       "x-access-token": getAccessToken(),
     },
+    body: JSON.stringify({products}),
   })
   return await resp.json()
 }
