@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Link, useHistory } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import clsx from "clsx"
 import { Edit2, User, Mail, Lock, ChevronRight, Package, ShoppingCart, LogOut } from "react-feather"
 
@@ -11,7 +11,7 @@ import api from '@/api'
 
 
 export default function AccountPage() {
-	const history = useHistory()
+	const navigate = useNavigate()
 	const {user, setUser} = useContext(UserContext)
 	const {cartDispatch} = useContext(CartContext)
 	const [showEditForm, setShowEditForm] = useState(false)
@@ -22,7 +22,7 @@ export default function AccountPage() {
 	}
 
 	if (!user) {
-		history.push("/login")
+		navigate("/login")
 		return null
 	}
 

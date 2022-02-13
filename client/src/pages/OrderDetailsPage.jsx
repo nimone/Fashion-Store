@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ChevronLeft } from "react-feather"
-import { useParams, useHistory, Link } from "react-router-dom"
+import { useParams, useNavigate, Link } from "react-router-dom"
 
 import Button from "@/components/Button"
 import Container from "@/components/Container"
@@ -10,7 +10,7 @@ import Loader from "@/components/Loader"
 import api from '../api'
 
 export default function OrderDetailsPage() {
-	const history = useHistory()
+	const navigate = useNavigate()
 	const { id } = useParams()
 	const [order, setOrder] = useState(null)
 
@@ -18,7 +18,7 @@ export default function OrderDetailsPage() {
 		(async () => {
 			const resp = await api.fetchOrderDetails(id)
 			if (resp.status !== "ok") {
-				history.replace("/404")
+				navigate("/404")
 			}
 			setOrder(resp.order)
 		})()

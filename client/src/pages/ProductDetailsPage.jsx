@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Link, useParams, useHistory } from "react-router-dom"
+import { Link, useParams, useNavigate } from "react-router-dom"
 import { Check, ChevronLeft, ShoppingCart } from "react-feather"
 
 import Button from "@/components/Button"
@@ -10,7 +10,7 @@ import { CartContext, UserContext } from '@/App'
 export default function ProductDetailsPage() {
 	const {user} = useContext(UserContext)
 	const {cart, cartDispatch} = useContext(CartContext)
-	const history = useHistory()
+	const navigate = useNavigate()
 	const { id } = useParams()
 	const [product, setProduct] = useState(null)
 
@@ -66,7 +66,7 @@ export default function ProductDetailsPage() {
 				</section>
 			</div>
 			<Button 
-				onClick={history.goBack}
+				onClick={() => navigate(-1)}
 				className="absolute top-0 text-lg" 
 				secondary
 			><ChevronLeft className="mr-2" /> Back

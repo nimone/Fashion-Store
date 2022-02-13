@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { sliderItems } from '@/dummydata'
 
 import { UserContext, CartContext } from '@/App'
@@ -9,7 +9,7 @@ import api from '@/api'
 export default function RegisterPage() {
 	const {setUser} = useContext(UserContext)
 	const {cart} = useContext(CartContext)
-	const history = useHistory()
+	const navigate = useNavigate()
 	
 	const handleRegister = async userData => {
 		const resp = await api.registerUser(userData)
@@ -23,9 +23,9 @@ export default function RegisterPage() {
 				})))
 
 				if (cart.products.length) {
-					history.push("/cart")
+					navigate("/cart")
 				} else {
-					history.push("/account")
+					navigate("/account")
 				}
 			}
 		}
