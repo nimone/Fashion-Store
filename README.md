@@ -1,6 +1,6 @@
 # Fashion-Store
 
-https://user-images.githubusercontent.com/30614282/161915127-25a2b0dd-0525-4aad-8c7d-24a717f45acd.mp4
+https://user-images.githubusercontent.com/30614282/161916675-86fb41ce-75cf-40f2-8c6e-db35ac1f059e.mp4
 
 ---
 ## Front-end
