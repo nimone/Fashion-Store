@@ -54,7 +54,7 @@ async function createUserCart(products) {
       "Content-Type": "application/json",
       "x-access-token": getAccessToken(),
     },
-    body: JSON.stringify({products}),
+    body: JSON.stringify(products.length ? {products}: {}),
   })
   return await resp.json()
 }
