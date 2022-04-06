@@ -47,7 +47,7 @@ export default function ProductDetailsPage() {
 					/>
 				</section>
 				<section className="flex flex-col justify-center space-y-6 text-gray-600">
-					<h2 className="text-4xl text-gray-800">{product.name}</h2>
+					<h2 className="text-4xl text-gray-800">{product.title}</h2>
 					<p className="text-xl">{product.description}</p>
 					<span className="text-2xl font-medium">${product.price}</span>
 					{cart.products.some(p => p.id === id) ? (
