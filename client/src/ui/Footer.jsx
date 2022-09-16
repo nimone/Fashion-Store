@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom"
-import { Facebook, Instagram, Twitter, MapPin, Phone, Mail } from "react-feather"
+import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, GitHub, Globe } from "react-feather"
 
 export default function Footer() {
 	return (
@@ -17,6 +17,12 @@ export default function Footer() {
 					</li>				
 					<li>
 						<Link to="#"><Twitter /></Link>
+					</li>
+					<li>
+						<a href="https://github.com/nimone/Fashion-Store"><GitHub /></a>
+					</li>
+					<li>
+						<a href="https://nimo.pages.dev"><Globe /></a>
 					</li>
 				</ul>
 			</div>			
@@ -62,9 +68,19 @@ export default function Footer() {
 					</li>					
 					<li className="flex items-center">
 						<Mail className="w-5 h-5 mr-2" />
-						<Link to="mailto:contact@brand.com">
-							contact@brand.com
-						</Link>
+						<a href="mailto:nimogha@gmail.com" target="_blank">
+							nimogha@gmail.com
+						</a>
+					</li>
+					<li className="flex items-center">
+						<GitHub className="w-5 h-5 mr-2" />
+						<a href="https://github.com/nimone/Fashion-Store" target="_blank">
+							/Fashion-Store
+						</a>
+						<span className='mx-1'>built by</span>
+						<a href="https://nimo.pages.dev" target="_blank" className='border-b-2 border-green-500'>
+							nimo
+						</a>
 					</li>
 				</ul>
 				<div className="mt-6">
